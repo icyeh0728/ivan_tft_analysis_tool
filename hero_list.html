@@ -226,7 +226,14 @@
                     currentSort.ascending = !currentSort.ascending;
                 } else {
                     currentSort.key = key;
-                    currentSort.ascending = true;
+                    // 修改默認排序方向
+                    if (key === 'name') {
+                        currentSort.ascending = true; // 名稱默認按字母升序
+                    } else if (key === 'avgPlacement') {
+                        currentSort.ascending = true; // 平均名次默認升序(越小越好)
+                    } else {
+                        currentSort.ascending = false; // 其他數值默認降序(越大越好)
+                    }
                 }
 
                 console.log('排序方向:', currentSort.ascending ? '升序' : '降序');
