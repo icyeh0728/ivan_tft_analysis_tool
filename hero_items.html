@@ -275,6 +275,12 @@
                     tbody.innerHTML = '';
                     
                     items.forEach(item => {
+                        // 處理原始裝備名稱用於加載圖片
+                        const itemName = item.item.toLowerCase();
+                        
+                        // 直接使用原始裝備名稱載入圖片
+                        const itemImgSrc = `./tft13_item_images/${itemName}.png`;
+                        
                         // 處理顯示名稱
                         let displayName = item.item
                             .replace(/^TFT_Item_|^TFT13_Item_|^tft_item_|^tft13_|^tft5_item_|^tft4_item_|^tft7_item_|^tft9_item_|^artifact_|^support/gi, '')
@@ -286,7 +292,7 @@
                             .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
                             .join(' ');
 
-                        // 直接生成SVG圖形作為裝備圖示
+                        // 創建備用SVG圖形
                         const fallbackSvg = `data:image/svg+xml,${encodeURIComponent(
                             `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
                                 <rect width="30" height="30" fill="#4A90E2"/>
@@ -300,9 +306,10 @@
                         row.innerHTML = `
                             <td>
                                 <div class="item-cell">
-                                    <img src="${fallbackSvg}" 
+                                    <img src="${itemImgSrc}" 
                                          alt="${displayName}" 
-                                         class="item-image">
+                                         class="item-image"
+                                         onerror="this.onerror=null; this.src='${fallbackSvg}';">
                                     ${displayName}
                                 </div>
                             </td>
