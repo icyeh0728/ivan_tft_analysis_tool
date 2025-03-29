@@ -173,6 +173,10 @@
                 const data = await response.json();
                 console.log('英雄數據加載成功:', data);
                 
+                if (!data.hero || typeof data.hero !== 'object') {
+                    throw new Error('無效的英雄數據格式');
+                }
+                
                 // 更新英雄圖片
                 const heroImgSrc = `./tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
                 const heroImg = document.getElementById('heroImage');
@@ -191,15 +195,16 @@
                 };
                 
                 // 更新英雄統計數據
-                document.getElementById('avgPlacement').textContent = (Number(data.avgPlacement) || 0).toFixed(2);
-                document.getElementById('delta').textContent = (Number(data.delta) || 0).toFixed(2);
-                document.getElementById('totalGames').textContent = Number(data.totalGames) || 0;
-                document.getElementById('winRate').textContent = `${Number(data.winRate) || 0}%`;
-                document.getElementById('top4Rate').textContent = `${Number(data.top4Rate) || 0}%`;
+                const hero = data.hero;
+                document.getElementById('avgPlacement').textContent = (Number(hero.avgPlacement) || 0).toFixed(2);
+                document.getElementById('delta').textContent = (Number(hero.delta) || 0).toFixed(2);
+                document.getElementById('totalGames').textContent = Number(hero.totalGames) || 0;
+                document.getElementById('winRate').textContent = `${Number(hero.winRate) || 0}%`;
+                document.getElementById('top4Rate').textContent = `${Number(hero.top4Rate) || 0}%`;
                 
                 // 設置Delta的顏色
                 const deltaElement = document.getElementById('delta');
-                if (Number(data.delta) < 0) {
+                if (Number(hero.delta) < 0) {
                     deltaElement.classList.add('negative-delta');
                     deltaElement.classList.remove('positive-delta');
                 } else {
@@ -224,7 +229,7 @@
                     const itemCard = document.createElement('div');
                     itemCard.className = 'item-card';
                     
-                    const itemName = item.name.replace('TFT_Item_', '');
+                    const itemName = item.item.replace('TFT_Item_', '').replace('TFT13_Item_', '');
                     const itemImgSrc = `./tft13_item_images/tft_item_${itemName.toLowerCase()}.tft_set13.png`;
                     
                     itemCard.innerHTML = `
@@ -245,7 +250,7 @@
                         <div class="item-stats">
                             <div>
                                 <span class="stat-label">平均名次:</span>
-                                <span>${(Number(item.avgPlacementWithItem) || 0).toFixed(2)}</span>
+                                <span>${(Number(item.avgWithItem) || 0).toFixed(2)}</span>
                             </div>
                             <div>
                                 <span class="stat-label">Delta:</span>
@@ -255,11 +260,11 @@
                             </div>
                             <div>
                                 <span class="stat-label">使用次數:</span>
-                                <span>${Number(item.gamesWithItem) || 0}</span>
+                                <span>${Number(item.games) || 0}</span>
                             </div>
                             <div>
                                 <span class="stat-label">使用率:</span>
-                                <span>${((Number(item.gamesWithItem) / Number(data.totalGames)) * 100).toFixed(1)}%</span>
+                                <span>${Number(item.usageRate).toFixed(1)}%</span>
                             </div>
                         </div>
                     `;
