@@ -281,32 +281,22 @@
                     
                     items.forEach(item => {
                         let itemName = item.item
-                            .replace('TFT_Item_', '')
-                            .replace('TFT13_Item_', '')
-                            .replace('tft_item_', '')
-                            .replace('tft13_', '')
-                            .replace('tft5_item_', '')
-                            .replace('tft4_item_', '')
-                            .replace('tft7_item_', '')
-                            .replace('tft9_item_', '')
-                            .replace('artifact_', '')
-                            .replace('support', '')
-                            .replace('.tft_set13', '')
+                            .replace(/^TFT_Item_|^TFT13_Item_|^tft_item_|^tft13_|^tft5_item_|^tft4_item_|^tft7_item_|^tft9_item_|^artifact_|^support/gi, '')
+                            .replace(/\.tft_set13$/, '')
+                            .replace(/radiant$/, '')
+                            .replace(/emblemitem$/, 'emblem')
+                            .replace(/[_-]/g, '')
                             .toLowerCase();
-                            
-                        // 移除特定後綴
-                        itemName = itemName
-                            .replace('radiant', '')
-                            .replace('emblemitem', 'emblem')
-                            .replace(/[_-]/g, ''); // 移除所有下劃線和連字符
-                            
+
+                        // 創建顯示名稱
                         const displayName = itemName
-                            .replace(/([a-z])([A-Z])/g, '$1 $2') // 在小寫後面跟著大寫的地方加入空格
+                            .replace(/([a-z])([A-Z])/g, '$1 $2')
                             .split(' ')
                             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                             .join(' ');
-                            
-                        const itemImgSrc = `./tft13_item_images/${itemName}.png`;
+
+                        // 生成圖片路徑
+                        const itemImgSrc = `./tft13_item_images/tft_item_${item.item.toLowerCase()}.png`;
                         
                         const row = document.createElement('tr');
                         row.innerHTML = `
