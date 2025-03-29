@@ -175,10 +175,7 @@
     </div>
 
     <script>
-        let currentSort = {
-            column: 'delta',
-            ascending: true
-        };
+        let originalItems = null;  // 保存原始數據順序
 
         function sortItems(items, column) {
             return [...items].sort((a, b) => {
@@ -186,12 +183,10 @@
                 let bValue = column === 'name' ? b.item : Number(b[column]) || 0;
                 
                 if (column === 'name') {
-                    return currentSort.ascending ? 
-                        aValue.localeCompare(bValue) : 
-                        bValue.localeCompare(aValue);
+                    return aValue.localeCompare(bValue);
                 }
                 
-                return currentSort.ascending ? aValue - bValue : bValue - aValue;
+                return bValue - aValue;  // 默認降序排序
             });
         }
 
@@ -200,7 +195,7 @@
             headers.forEach(header => {
                 header.classList.remove('sort-asc', 'sort-desc');
                 if (header.dataset.sort === column) {
-                    header.classList.add(currentSort.ascending ? 'sort-asc' : 'sort-desc');
+                    header.classList.add('sort-desc');
                 }
             });
         }
@@ -269,6 +264,9 @@
                     deltaElement.classList.remove('negative-delta');
                 }
                 
+                // 保存原始數據順序
+                originalItems = [...data.items];
+                
                 // 渲染裝備表格
                 function renderTable(items) {
                     const tbody = document.getElementById('itemsTableBody');
@@ -308,25 +306,30 @@
                     });
                 }
                 
-                // 初始化排序和表格
-                const sortedItems = sortItems(data.items, currentSort.column);
-                renderTable(sortedItems);
-                updateSortIcons(currentSort.column);
+                // 初始化表格，顯示原始數據
+                renderTable(originalItems);
                 
                 // 添加排序事件監聽器
                 document.querySelectorAll('th').forEach(header => {
                     header.addEventListener('click', () => {
                         const column = header.dataset.sort;
-                        if (currentSort.column === column) {
-                            currentSort.ascending = !currentSort.ascending;
-                        } else {
-                            currentSort.column = column;
-                            currentSort.ascending = true;
-                        }
                         
-                        const sortedItems = sortItems(data.items, column);
-                        renderTable(sortedItems);
-                        updateSortIcons(column);
+                        // 檢查是否已經在顯示原始數據
+                        const tbody = document.getElementById('itemsTableBody');
+                        const firstRow = tbody.firstElementChild;
+                        const isShowingOriginal = !firstRow || firstRow.querySelector('td:first-child').textContent === originalItems[0].item.replace('TFT_Item_', '').replace('TFT13_Item_', '');
+                        
+                        if (isShowingOriginal) {
+                            // 如果是原始數據，則進行排序
+                            const sortedItems = sortItems(originalItems, column);
+                            renderTable(sortedItems);
+                            updateSortIcons(column);
+                        } else {
+                            // 如果不是原始數據，則恢復原始順序
+                            renderTable(originalItems);
+                            header.classList.remove('sort-asc', 'sort-desc');
+                            header.classList.add('sort-icon');
+                        }
                     });
                 });
                 
