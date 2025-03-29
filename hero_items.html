@@ -246,53 +246,58 @@
                 const data = await response.json();
                 console.log('數據加載成功:', data);
                 
-                // 更新頁面標題
-                document.title = `${data.hero.name} - 裝備分析`;
+                // 更新頁面標題和英雄圖片
+                const heroName = heroId.replace('TFT13_', '');
+                document.title = `${heroName} - 裝備分析`;
                 
-                // 更新英雄信息
-                document.getElementById('heroName').textContent = data.hero.name;
-                document.getElementById('heroStats').textContent = 
-                    `平均名次: ${data.hero.avgPlacement} | ` +
-                    `Delta值: ${data.hero.delta} | ` +
-                    `總場次: ${data.hero.totalGames} | ` +
-                    `勝率: ${data.hero.winRate}% | ` +
-                    `前四率: ${data.hero.top4Rate}%`;
-
                 // 設置英雄圖片
                 const heroImage = document.getElementById('heroImage');
-                const heroName = data.hero.name.toLowerCase();
-                heroImage.src = `tft13_character_images/tft13_${heroName}_square.tft_set13.jpg`;
+                heroImage.src = `tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
+                heroImage.alt = heroName;
                 heroImage.onerror = () => {
-                    heroImage.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" fill="%234A90E2"/><text x="40" y="45" font-size="20" fill="white" text-anchor="middle">' + heroName.slice(0, 2).toUpperCase() + '</text></svg>';
+                    heroImage.src = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" fill="%234A90E2"/><text x="40" y="50" font-size="24" fill="white" text-anchor="middle">${heroName.slice(0, 2).toUpperCase()}</text></svg>`;
                 };
+
+                // 更新英雄名稱
+                document.getElementById('heroName').textContent = heroName;
+
+                // 更新英雄統計數據
+                const statsHtml = `
+                    平均名次: ${data.avgPlacement.toFixed(2)} | 
+                    Delta: <span class="${data.delta < 0 ? 'negative-delta' : 'positive-delta'}">${data.delta.toFixed(2)}</span> | 
+                    總場次: ${data.totalGames} | 
+                    勝率: ${data.winRate}% | 
+                    前四率: ${data.top4Rate}%
+                `;
+                document.getElementById('heroStats').innerHTML = statsHtml;
 
                 // 處理裝備數據
                 itemData = data.items.map(item => ({
-                    item: item.item,
+                    item: item.name,
                     delta: item.delta,
-                    avgWithItem: item.avgWithItem,
-                    usage: item.games,
-                    usageRate: item.usageRate
+                    avgWithItem: item.avgPlacementWithItem,
+                    usage: item.gamesWithItem,
+                    usageRate: ((item.gamesWithItem / data.totalGames) * 100).toFixed(1)
                 }));
 
-                // 初始化表格
-                const headers = document.querySelectorAll('th');
-                headers.forEach(header => {
-                    if (header.dataset.sort === currentSort.column) {
-                        header.classList.add(currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc');
-                    }
-                    header.addEventListener('click', () => sortTable(header.dataset.sort));
-                });
-
+                // 渲染表格
                 renderTable();
+
+                // 添加表格排序事件監聽器
+                document.querySelectorAll('th').forEach(header => {
+                    header.addEventListener('click', () => {
+                        sortTable(header.dataset.sort);
+                    });
+                });
 
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('heroName').textContent = '錯誤';
-                document.getElementById('heroStats').textContent = '無法載入數據';
+                document.getElementById('heroStats').innerHTML = '無法載入英雄數據';
+                document.getElementById('itemTable').innerHTML = '無法載入裝備數據';
             }
         }
-        
+
+        // 載入數據
         loadData();
     </script>
 </body>
