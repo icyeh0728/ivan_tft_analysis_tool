@@ -279,7 +279,8 @@
                     const itemName = item.item.toLowerCase();
                     return !itemName.includes('emptybag') && 
                            !itemName.includes('emblem') && 
-                           !itemName.includes('emblemitem');
+                           !itemName.includes('emblemitem') &&
+                           !itemName.includes('noitems');
                 });
                 
                 // 渲染裝備表格
