@@ -275,31 +275,6 @@
                     tbody.innerHTML = '';
                     
                     items.forEach(item => {
-                        // 處理裝備名稱以生成圖片路徑
-                        let itemImgSrc = item.item.toLowerCase();
-                        
-                        // 處理特殊情況
-                        if (itemImgSrc === 'noitems') {
-                            itemImgSrc = 'noitems';
-                        } else {
-                            // 移除所有前綴
-                            itemImgSrc = itemImgSrc
-                                .replace(/^tft_|^tft13_|^tft5_|^tft4_|^tft7_|^tft9_|^artifact_|^support/gi, '')
-                                .replace(/^item_/gi, '');
-                            
-                            // 移除後綴
-                            itemImgSrc = itemImgSrc
-                                .replace(/radiant$/, '')
-                                .replace(/emblemitem$/, 'emblem')
-                                .replace(/\.tft_set13$/, '');
-                            
-                            // 添加前綴
-                            itemImgSrc = `tft_item_${itemImgSrc}`;
-                        }
-                        
-                        // 生成完整的圖片路徑
-                        itemImgSrc = `./tft13_item_images/${itemImgSrc}.png`;
-                        
                         // 處理顯示名稱
                         let displayName = item.item
                             .replace(/^TFT_Item_|^TFT13_Item_|^tft_item_|^tft13_|^tft5_item_|^tft4_item_|^tft7_item_|^tft9_item_|^artifact_|^support/gi, '')
@@ -310,22 +285,24 @@
                             .split(' ')
                             .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
                             .join(' ');
+
+                        // 直接生成SVG圖形作為裝備圖示
+                        const fallbackSvg = `data:image/svg+xml,${encodeURIComponent(
+                            `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+                                <rect width="30" height="30" fill="#4A90E2"/>
+                                <text x="15" y="15" font-size="12" fill="white" text-anchor="middle" dominant-baseline="middle">
+                                    ${displayName.slice(0, 2).toUpperCase()}
+                                </text>
+                            </svg>`
+                        )}`;
                         
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>
                                 <div class="item-cell">
-                                    <img src="${itemImgSrc}" 
+                                    <img src="${fallbackSvg}" 
                                          alt="${displayName}" 
-                                         class="item-image"
-                                         onerror="this.onerror=null; this.src='data:image/svg+xml,${encodeURIComponent(
-                                             `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
-                                                 <rect width="30" height="30" fill="#4A90E2"/>
-                                                 <text x="15" y="15" font-size="12" fill="white" text-anchor="middle" dominant-baseline="middle">
-                                                     ${displayName.slice(0, 2).toUpperCase()}
-                                                 </text>
-                                             </svg>`
-                                         )}';">
+                                         class="item-image">
                                     ${displayName}
                                 </div>
                             </td>
