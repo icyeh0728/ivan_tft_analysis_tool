@@ -292,6 +292,9 @@
                                 .replace(/radiant$/, '')
                                 .replace(/emblemitem$/, 'emblem')
                                 .replace(/\.tft_set13$/, '');
+                            
+                            // 添加前綴
+                            itemImgSrc = `tft_item_${itemImgSrc}`;
                         }
                         
                         // 生成完整的圖片路徑
