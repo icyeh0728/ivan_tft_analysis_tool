@@ -297,11 +297,13 @@
                         // 處理神器(Artifact)裝備
                         else if (rawItemName.includes('artifact')) {
                             // 從原始名稱中提取關鍵部分
-                            itemName = rawItemName
-                                .replace(/^tft_item_artifact_|^artifact_/i, '')
+                            const artifactName = item.item
+                                .replace(/^TFT_Item_Artifact_|^tft_item_artifact_|^artifact_/i, '')
                                 .replace(/\.tft_set13$/i, '')
                                 .toLowerCase();
-                            itemImgSrc = `./tft13_item_images/tft_item_artifact_${itemName}.tft_set13.png`;
+                            
+                            itemImgSrc = `./tft13_item_images/tft_item_artifact_${artifactName}.tft_set13.png`;
+                            console.log("神器圖片路徑:", itemImgSrc);
                         } 
                         // 處理其他標準裝備
                         else {
