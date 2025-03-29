@@ -172,8 +172,17 @@
                 
                 const data = await response.json();
                 console.log('英雄數據加載成功:', data);
+                console.log('數據類型:', typeof data);
+                console.log('數據結構:', JSON.stringify(data, null, 2));
                 
+                // 檢查數據結構
+                if (!data || typeof data !== 'object') {
+                    throw new Error('無效的數據格式');
+                }
+
+                // 檢查hero屬性
                 if (!data.hero || typeof data.hero !== 'object') {
+                    console.error('無效的hero數據:', data.hero);
                     throw new Error('無效的英雄數據格式');
                 }
                 
@@ -196,15 +205,34 @@
                 
                 // 更新英雄統計數據
                 const hero = data.hero;
-                document.getElementById('avgPlacement').textContent = (Number(hero.avgPlacement) || 0).toFixed(2);
-                document.getElementById('delta').textContent = (Number(hero.delta) || 0).toFixed(2);
-                document.getElementById('totalGames').textContent = Number(hero.totalGames) || 0;
-                document.getElementById('winRate').textContent = `${Number(hero.winRate) || 0}%`;
-                document.getElementById('top4Rate').textContent = `${Number(hero.top4Rate) || 0}%`;
+                console.log('英雄數據:', hero);
+
+                // 安全地獲取數值並轉換
+                const getNumberValue = (obj, key) => {
+                    const value = obj[key];
+                    if (value === undefined || value === null) {
+                        console.warn(`${key} 值不存在`);
+                        return 0;
+                    }
+                    const num = Number(value);
+                    if (isNaN(num)) {
+                        console.warn(`${key} 值無法轉換為數字:`, value);
+                        return 0;
+                    }
+                    return num;
+                };
+
+                // 更新統計數據
+                document.getElementById('avgPlacement').textContent = getNumberValue(hero, 'avgPlacement').toFixed(2);
+                document.getElementById('delta').textContent = getNumberValue(hero, 'delta').toFixed(2);
+                document.getElementById('totalGames').textContent = getNumberValue(hero, 'totalGames');
+                document.getElementById('winRate').textContent = `${getNumberValue(hero, 'winRate')}%`;
+                document.getElementById('top4Rate').textContent = `${getNumberValue(hero, 'top4Rate')}%`;
                 
                 // 設置Delta的顏色
                 const deltaElement = document.getElementById('delta');
-                if (Number(hero.delta) < 0) {
+                const deltaStat = getNumberValue(hero, 'delta');
+                if (deltaStat < 0) {
                     deltaElement.classList.add('negative-delta');
                     deltaElement.classList.remove('positive-delta');
                 } else {
@@ -217,19 +245,24 @@
                 itemsContainer.innerHTML = '';
                 
                 if (!Array.isArray(data.items)) {
+                    console.error('無效的items數據:', data.items);
                     throw new Error('裝備數據格式錯誤');
                 }
                 
-                data.items.forEach(item => {
+                console.log('裝備數量:', data.items.length);
+                
+                data.items.forEach((item, index) => {
                     if (!item || typeof item !== 'object') {
-                        console.warn('跳過無效的裝備數據:', item);
+                        console.warn(`跳過無效的裝備數據 [${index}]:`, item);
                         return;
                     }
+                    
+                    console.log(`處理裝備 [${index}]:`, item);
                     
                     const itemCard = document.createElement('div');
                     itemCard.className = 'item-card';
                     
-                    const itemName = item.item.replace('TFT_Item_', '').replace('TFT13_Item_', '');
+                    const itemName = (item.item || '').replace('TFT_Item_', '').replace('TFT13_Item_', '');
                     const itemImgSrc = `./tft13_item_images/tft_item_${itemName.toLowerCase()}.tft_set13.png`;
                     
                     itemCard.innerHTML = `
@@ -250,21 +283,21 @@
                         <div class="item-stats">
                             <div>
                                 <span class="stat-label">平均名次:</span>
-                                <span>${(Number(item.avgWithItem) || 0).toFixed(2)}</span>
+                                <span>${getNumberValue(item, 'avgWithItem').toFixed(2)}</span>
                             </div>
                             <div>
                                 <span class="stat-label">Delta:</span>
-                                <span class="${(Number(item.delta) || 0) < 0 ? 'negative-delta' : 'positive-delta'}">
-                                    ${(Number(item.delta) || 0).toFixed(2)}
+                                <span class="${getNumberValue(item, 'delta') < 0 ? 'negative-delta' : 'positive-delta'}">
+                                    ${getNumberValue(item, 'delta').toFixed(2)}
                                 </span>
                             </div>
                             <div>
                                 <span class="stat-label">使用次數:</span>
-                                <span>${Number(item.games) || 0}</span>
+                                <span>${getNumberValue(item, 'games')}</span>
                             </div>
                             <div>
                                 <span class="stat-label">使用率:</span>
-                                <span>${Number(item.usageRate).toFixed(1)}%</span>
+                                <span>${getNumberValue(item, 'usageRate').toFixed(1)}%</span>
                             </div>
                         </div>
                     `;
