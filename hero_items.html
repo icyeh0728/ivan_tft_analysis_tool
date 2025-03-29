@@ -179,13 +179,16 @@
 
         function sortItems(items, column) {
             return [...items].sort((a, b) => {
-                let aValue = column === 'name' ? a.item : Number(a[column]) || 0;
-                let bValue = column === 'name' ? b.item : Number(b[column]) || 0;
-                
                 if (column === 'name') {
-                    return aValue.localeCompare(bValue);
+                    // 處理裝備名稱以進行比較
+                    const aName = a.item.replace('TFT_Item_', '').replace('TFT13_Item_', '').replace('tft_item_', '').toLowerCase();
+                    const bName = b.item.replace('TFT_Item_', '').replace('TFT13_Item_', '').replace('tft_item_', '').toLowerCase();
+                    return aName.localeCompare(bName);
                 }
                 
+                // 確保數值比較的正確性
+                const aValue = Number(a[column]) || 0;
+                const bValue = Number(b[column]) || 0;
                 return bValue - aValue;  // 默認降序排序
             });
         }
@@ -196,6 +199,8 @@
                 header.classList.remove('sort-asc', 'sort-desc');
                 if (header.dataset.sort === column) {
                     header.classList.add('sort-desc');
+                } else {
+                    header.classList.add('sort-icon');
                 }
             });
         }
@@ -313,23 +318,9 @@
                 document.querySelectorAll('th').forEach(header => {
                     header.addEventListener('click', () => {
                         const column = header.dataset.sort;
-                        
-                        // 檢查是否已經在顯示原始數據
-                        const tbody = document.getElementById('itemsTableBody');
-                        const firstRow = tbody.firstElementChild;
-                        const isShowingOriginal = !firstRow || firstRow.querySelector('td:first-child').textContent === originalItems[0].item.replace('TFT_Item_', '').replace('TFT13_Item_', '');
-                        
-                        if (isShowingOriginal) {
-                            // 如果是原始數據，則進行排序
-                            const sortedItems = sortItems(originalItems, column);
-                            renderTable(sortedItems);
-                            updateSortIcons(column);
-                        } else {
-                            // 如果不是原始數據，則恢復原始順序
-                            renderTable(originalItems);
-                            header.classList.remove('sort-asc', 'sort-desc');
-                            header.classList.add('sort-icon');
-                        }
+                        const sortedItems = sortItems(originalItems, column);
+                        renderTable(sortedItems);
+                        updateSortIcons(column);
                     });
                 });
                 
