@@ -176,22 +176,17 @@
 
     <script>
         let originalItems = null;  // 保存原始數據順序
-        let currentSortColumn = null;
-        let isAscending = false;
 
         function sortItems(items, column) {
             return [...items].sort((a, b) => {
                 if (column === 'name') {
-                    // 處理裝備名稱以進行比較
-                    const aName = a.item.replace('TFT_Item_', '').replace('TFT13_Item_', '').replace('tft_item_', '').toLowerCase();
-                    const bName = b.item.replace('TFT_Item_', '').replace('TFT13_Item_', '').replace('tft_item_', '').toLowerCase();
-                    return isAscending ? aName.localeCompare(bName) : bName.localeCompare(aName);
+                    return a.item.localeCompare(b.item);
                 }
                 
                 // 確保數值比較的正確性
                 const aValue = Number(a[column]) || 0;
                 const bValue = Number(b[column]) || 0;
-                return isAscending ? aValue - bValue : bValue - aValue;
+                return bValue - aValue;  // 默認降序排序
             });
         }
 
@@ -200,7 +195,7 @@
             headers.forEach(header => {
                 header.classList.remove('sort-asc', 'sort-desc', 'sort-icon');
                 if (header.dataset.sort === column) {
-                    header.classList.add(isAscending ? 'sort-asc' : 'sort-desc');
+                    header.classList.add('sort-desc');
                 } else {
                     header.classList.add('sort-icon');
                 }
@@ -280,55 +275,22 @@
                     tbody.innerHTML = '';
                     
                     items.forEach(item => {
-                        // 處理裝備名稱以生成圖片路徑
-                        let itemImgSrc = item.item.toLowerCase();
-                        
-                        // 處理特殊情況
-                        if (itemImgSrc === 'noitems') {
-                            itemImgSrc = 'noitems';
-                        } else {
-                            // 移除所有前綴
-                            itemImgSrc = itemImgSrc
-                                .replace(/^tft_|^tft13_|^tft5_|^tft4_|^tft7_|^tft9_|^artifact_|^support/gi, '')
-                                .replace(/^item_/gi, '');
-                            
-                            // 移除後綴
-                            itemImgSrc = itemImgSrc
-                                .replace(/radiant$/, '')
-                                .replace(/emblemitem$/, 'emblem')
-                                .replace(/\.tft_set13$/, '');
-                        }
-                        
-                        // 生成完整的圖片路徑
-                        itemImgSrc = `./tft13_item_images/${itemImgSrc}.png`;
-                        
-                        // 處理顯示名稱
-                        let displayName = item.item
-                            .replace(/^TFT_Item_|^TFT13_Item_|^tft_item_|^tft13_|^tft5_item_|^tft4_item_|^tft7_item_|^tft9_item_|^artifact_|^support/gi, '')
-                            .replace(/\.tft_set13$/, '')
-                            .replace(/radiant$/, '')
-                            .replace(/emblemitem$/, 'emblem')
-                            .replace(/[_-]/g, ' ')
-                            .split(' ')
-                            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                            .join(' ');
-                        
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>
                                 <div class="item-cell">
-                                    <img src="${itemImgSrc}" 
-                                         alt="${displayName}" 
+                                    <img src="./tft13_item_images/${item.item.toLowerCase()}.png" 
+                                         alt="${item.item}" 
                                          class="item-image"
                                          onerror="this.onerror=null; this.src='data:image/svg+xml,${encodeURIComponent(
                                              `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
                                                  <rect width="30" height="30" fill="#4A90E2"/>
                                                  <text x="15" y="15" font-size="12" fill="white" text-anchor="middle" dominant-baseline="middle">
-                                                     ${displayName.slice(0, 2).toUpperCase()}
+                                                     ${item.item.slice(0, 2).toUpperCase()}
                                                  </text>
                                              </svg>`
                                          )}';">
-                                    ${displayName}
+                                    ${item.item}
                                 </div>
                             </td>
                             <td>${(Number(item.avgWithItem) || 0).toFixed(2)}</td>
@@ -350,15 +312,6 @@
                 document.querySelectorAll('th').forEach(header => {
                     header.addEventListener('click', () => {
                         const column = header.dataset.sort;
-                        
-                        // 如果點擊的是同一列，切換排序方向
-                        if (currentSortColumn === column) {
-                            isAscending = !isAscending;
-                        } else {
-                            currentSortColumn = column;
-                            isAscending = false;  // 新列默認降序
-                        }
-                        
                         const sortedItems = sortItems(originalItems, column);
                         renderTable(sortedItems);
                         updateSortIcons(column);
