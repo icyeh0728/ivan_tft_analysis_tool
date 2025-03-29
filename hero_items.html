@@ -237,7 +237,7 @@
                 }
                 
                 // 更新英雄圖片
-                const heroImgSrc = `/ivan_tft_analysis_tool/tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
+                const heroImgSrc = `./tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
                 const heroImg = document.getElementById('heroImage');
                 heroImg.src = heroImgSrc;
                 heroImg.onerror = function() {
@@ -280,25 +280,26 @@
                     tbody.innerHTML = '';
                     
                     items.forEach(item => {
-                        // 根據實際文件名格式生成圖片路徑
-                        let itemFileName = '';
-                        if (item.item.includes('TFT4_Item_')) {
-                            itemFileName = item.item.replace('TFT4_Item_', 'tft4_item_') + '.tft_set13.png';
-                        } else if (item.item.includes('TFT5_Item_')) {
-                            itemFileName = item.item.replace('TFT5_Item_', 'tft5_item_') + '.tft_set13.png';
-                        } else if (item.item.includes('TFT7_Item_')) {
-                            itemFileName = item.item.replace('TFT7_Item_', 'tft7_item_') + '.tft_set13.png';
-                        } else if (item.item.includes('TFT9_Item_')) {
-                            itemFileName = item.item.replace('TFT9_Item_', 'tft9_item_') + '.tft_set13.png';
-                        } else if (item.item.includes('TFT13_Item_')) {
-                            itemFileName = item.item.replace('TFT13_Item_', 'tft13_item_') + '.tft_set13.png';
-                        } else if (item.item.includes('Artifact_')) {
-                            itemFileName = 'tft_item_artifact_' + item.item.replace('Artifact_', '').toLowerCase() + '.tft_set13.png';
-                        } else {
-                            itemFileName = 'tft_item_' + item.item.toLowerCase() + '.tft_set13.png';
+                        // 處理裝備名稱以生成檔案名
+                        let itemName = item.item
+                            .replace(/^TFT_Item_|^TFT13_Item_|^tft_item_|^tft13_|^tft5_item_|^tft4_item_|^tft7_item_|^tft9_item_|^artifact_|^support/gi, '')
+                            .replace(/\.tft_set13$/, '')
+                            .replace(/radiant$/, '')
+                            .replace(/emblemitem$/, '')
+                            .toLowerCase();
+                        
+                        // 針對特殊項目進行處理
+                        if (itemName.includes('emblem')) {
+                            itemName = itemName.replace('emblem', '');
                         }
                         
-                        const itemImgSrc = `/ivan_tft_analysis_tool/tft13_item_images/${itemFileName}`;
+                        // 生成正確的圖片路徑
+                        let itemImgSrc;
+                        if (item.item.toLowerCase().includes('artifact')) {
+                            itemImgSrc = `./tft13_item_images/tft_item_artifact_${itemName}.tft_set13.png`;
+                        } else {
+                            itemImgSrc = `./tft13_item_images/tft_item_${itemName}.tft_set13.png`;
+                        }
                         
                         // 處理顯示名稱
                         let displayName = item.item
