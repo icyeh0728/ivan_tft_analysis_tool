@@ -280,8 +280,30 @@
                     tbody.innerHTML = '';
                     
                     items.forEach(item => {
-                        // 保持原始裝備名稱用於圖片路徑
-                        const itemImgSrc = `./tft13_item_images/${item.item.toLowerCase()}.png`;
+                        // 處理裝備名稱以生成圖片路徑
+                        let itemImgSrc = item.item.toLowerCase();
+                        
+                        // 處理特殊情況
+                        if (itemImgSrc === 'noitems') {
+                            itemImgSrc = 'noitems';
+                        } else {
+                            // 移除所有前綴
+                            itemImgSrc = itemImgSrc
+                                .replace(/^tft_|^tft13_|^tft5_|^tft4_|^tft7_|^tft9_|^artifact_|^support/gi, '')
+                                .replace(/^item_/gi, '');
+                            
+                            // 移除後綴
+                            itemImgSrc = itemImgSrc
+                                .replace(/radiant$/, '')
+                                .replace(/emblemitem$/, 'emblem')
+                                .replace(/\.tft_set13$/, '');
+                            
+                            // 添加前綴
+                            itemImgSrc = `tft_item_${itemImgSrc}`;
+                        }
+                        
+                        // 生成完整的圖片路徑
+                        itemImgSrc = `./tft13_item_images/${itemImgSrc}.png`;
                         
                         // 處理顯示名稱
                         let displayName = item.item
