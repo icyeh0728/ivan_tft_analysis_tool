@@ -274,8 +274,8 @@
                     
                     items.forEach(item => {
                         const row = document.createElement('tr');
-                        const itemName = item.item.replace('TFT_Item_', '').replace('TFT13_Item_', '');
-                        const itemImgSrc = `./tft13_item_images/tft_item_${itemName.toLowerCase()}.tft_set13.png`;
+                        const itemName = item.item.replace('TFT_Item_', '').replace('TFT13_Item_', '').replace('tft_item_', '').toLowerCase();
+                        const itemImgSrc = `./tft13_item_images/tft_item_${itemName}.png`;
                         
                         row.innerHTML = `
                             <td>
@@ -291,7 +291,7 @@
                                                  </text>
                                              </svg>`
                                          )}';">
-                                    ${itemName}
+                                    ${itemName.charAt(0).toUpperCase() + itemName.slice(1)}
                                 </div>
                             </td>
                             <td>${(Number(item.avgWithItem) || 0).toFixed(2)}</td>
