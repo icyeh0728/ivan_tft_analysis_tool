@@ -237,7 +237,7 @@
                 }
                 
                 // 更新英雄圖片
-                const heroImgSrc = `/ivan_tft_analysis_tool/tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
+                const heroImgSrc = `./tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
                 const heroImg = document.getElementById('heroImage');
                 heroImg.src = heroImgSrc;
                 heroImg.onerror = function() {
@@ -280,7 +280,6 @@
                     tbody.innerHTML = '';
                     
                     items.forEach(item => {
-                        const row = document.createElement('tr');
                         let itemName = item.item
                             .replace('TFT_Item_', '')
                             .replace('TFT13_Item_', '')
@@ -298,15 +297,18 @@
                         // 移除特定後綴
                         itemName = itemName
                             .replace('radiant', '')
-                            .replace('emblemitem', 'emblem');
+                            .replace('emblemitem', 'emblem')
+                            .replace(/[_-]/g, ''); // 移除所有下劃線和連字符
                             
                         const displayName = itemName
-                            .split('_')
+                            .replace(/([a-z])([A-Z])/g, '$1 $2') // 在小寫後面跟著大寫的地方加入空格
+                            .split(' ')
                             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                             .join(' ');
                             
-                        const itemImgSrc = `/ivan_tft_analysis_tool/tft13_item_images/${itemName}.png`;
+                        const itemImgSrc = `./tft13_item_images/${itemName}.png`;
                         
+                        const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>
                                 <div class="item-cell">
