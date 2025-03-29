@@ -274,6 +274,14 @@
                 // 保存原始數據順序
                 originalItems = [...data.items];
                 
+                // 過濾移除 Emptybag 和 Emblem 裝備
+                originalItems = originalItems.filter(item => {
+                    const itemName = item.item.toLowerCase();
+                    return !itemName.includes('emptybag') && 
+                           !itemName.includes('emblem') && 
+                           !itemName.includes('emblemitem');
+                });
+                
                 // 渲染裝備表格
                 function renderTable(items) {
                     const tbody = document.getElementById('itemsTableBody');
