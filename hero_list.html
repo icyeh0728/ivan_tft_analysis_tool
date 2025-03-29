@@ -132,27 +132,49 @@
             ascending: true
         };
 
-        function createHeroCard(hero) {
-            const card = document.createElement('div');
-            card.className = 'hero-card';
-            card.onclick = () => window.location.href = `hero_items.html?hero=${hero.id}`;
-            
-            const heroName = hero.id.replace('TFT13_', '');
-            card.innerHTML = `
-                <img src="tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg" 
-                     alt="${heroName}" 
-                     class="hero-image"
-                     onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%234A90E2\'/><text x=\'50\' y=\'50\' font-size=\'20\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>${heroName.slice(0, 2).toUpperCase()}</text></svg>'">
-                <div class="hero-info">
-                    <h3>${heroName}</h3>
-                    <p>平均名次: ${hero.avgPlacement.toFixed(2)}</p>
-                    <p>Delta: ${hero.delta.toFixed(2)}</p>
-                    <p>使用次數: ${hero.totalGames}</p>
-                    <p>勝率: ${hero.winRate}%</p>
-                    <p>前四率: ${hero.top4Rate}%</p>
-                </div>
-            `;
-            return card;
+        function renderHeroGrid(heroList) {
+            const grid = document.getElementById('heroGrid');
+            grid.innerHTML = '';
+            heroList.forEach(hero => {
+                const card = document.createElement('div');
+                card.className = 'hero-card';
+                card.onclick = () => window.location.href = `hero_items.html?hero=TFT13_${hero.name}`;
+                
+                const heroName = hero.name;
+                
+                card.innerHTML = `
+                    <div class="hero-header">
+                        <img src="tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg" 
+                             alt="${heroName}" 
+                             class="hero-image"
+                             onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%234A90E2\'/><text x=\'50\' y=\'50\' font-size=\'20\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>${heroName.slice(0, 2).toUpperCase()}</text></svg>'">
+                        <h3 class="hero-name">${heroName}</h3>
+                    </div>
+                    <div class="hero-stats">
+                        <div>
+                            <span class="stat-label">平均名次:</span>
+                            <span>${hero.avgPlacement.toFixed(2)}</span>
+                        </div>
+                        <div>
+                            <span class="stat-label">Delta:</span>
+                            <span class="${hero.delta < 0 ? 'positive-delta' : 'negative-delta'}">${hero.delta.toFixed(2)}</span>
+                        </div>
+                        <div>
+                            <span class="stat-label">使用次數:</span>
+                            <span>${hero.totalGames}</span>
+                        </div>
+                        <div>
+                            <span class="stat-label">勝率:</span>
+                            <span>${hero.winRate}%</span>
+                        </div>
+                        <div>
+                            <span class="stat-label">前四率:</span>
+                            <span>${hero.top4Rate}%</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
         }
 
         function sortHeroes(key) {
@@ -171,18 +193,20 @@
                 currentSort.ascending = true;
             }
 
-            heroes.sort((a, b) => {
+            const sortedHeroes = [...heroes].sort((a, b) => {
+                let aValue = a[key];
+                let bValue = b[key];
+                
                 if (key === 'name') {
                     return currentSort.ascending ? 
-                        a[key].localeCompare(b[key]) : 
-                        b[key].localeCompare(a[key]);
+                        aValue.localeCompare(bValue) : 
+                        bValue.localeCompare(aValue);
                 }
-                return currentSort.ascending ? 
-                    a[key] - b[key] : 
-                    b[key] - a[key];
+                
+                return currentSort.ascending ? aValue - bValue : bValue - aValue;
             });
 
-            renderHeroes();
+            renderHeroGrid(sortedHeroes);
         }
 
         function filterHeroes(query) {
@@ -199,15 +223,6 @@
             } catch (error) {
                 console.error('過濾英雄時出錯:', error);
             }
-        }
-
-        function renderHeroGrid(heroList) {
-            const grid = document.getElementById('heroGrid');
-            grid.innerHTML = heroList.map(createHeroCard).join('');
-        }
-
-        function renderHeroes() {
-            renderHeroGrid(heroes);
         }
 
         async function loadHeroes() {
@@ -230,49 +245,7 @@
                 heroes = data;
                 
                 // 渲染英雄卡片
-                const heroGrid = document.getElementById('heroGrid');
-                heroGrid.innerHTML = '';
-                heroes.forEach(hero => {
-                    const card = document.createElement('div');
-                    card.className = 'hero-card';
-                    card.onclick = () => window.location.href = `hero_items.html?hero=TFT13_${hero.name}`;
-                    
-                    const heroName = hero.name;
-                    console.log('處理英雄:', heroName);
-                    
-                    card.innerHTML = `
-                        <div class="hero-header">
-                            <img src="tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg" 
-                                 alt="${heroName}" 
-                                 class="hero-image"
-                                 onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%234A90E2\'/><text x=\'50\' y=\'50\' font-size=\'20\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>${heroName.slice(0, 2).toUpperCase()}</text></svg>'">
-                            <h3 class="hero-name">${heroName}</h3>
-                        </div>
-                        <div class="hero-stats">
-                            <div>
-                                <span class="stat-label">平均名次:</span>
-                                <span>${hero.avgPlacement.toFixed(2)}</span>
-                            </div>
-                            <div>
-                                <span class="stat-label">Delta:</span>
-                                <span class="${hero.delta < 0 ? 'positive-delta' : 'negative-delta'}">${hero.delta.toFixed(2)}</span>
-                            </div>
-                            <div>
-                                <span class="stat-label">使用次數:</span>
-                                <span>${hero.totalGames}</span>
-                            </div>
-                            <div>
-                                <span class="stat-label">勝率:</span>
-                                <span>${hero.winRate}%</span>
-                            </div>
-                            <div>
-                                <span class="stat-label">前四率:</span>
-                                <span>${hero.top4Rate}%</span>
-                            </div>
-                        </div>
-                    `;
-                    heroGrid.appendChild(card);
-                });
+                renderHeroGrid(heroes);
 
                 // 添加排序按鈕事件監聽器
                 document.querySelectorAll('.sort-button').forEach(button => {
