@@ -397,6 +397,13 @@
                     });
                 });
                 
+                // 設置預設排序為使用次數降序
+                currentSortColumn = 'games';
+                isAscending = false;
+                const sortedItems = sortItems(originalItems, 'games');
+                renderTable(sortedItems);
+                updateSortIcons('games');
+                
             } catch (error) {
                 console.error('加載數據時出錯:', error);
                 const container = document.getElementById('container');
