@@ -186,10 +186,19 @@
         }
 
         function filterHeroes(query) {
-            const filteredHeroes = heroes.filter(hero => 
-                hero.name.toLowerCase().includes(query.toLowerCase())
-            );
-            renderHeroGrid(filteredHeroes);
+            try {
+                console.log('過濾英雄:', query);
+                if (!Array.isArray(heroes)) {
+                    throw new Error('英雄數據尚未加載');
+                }
+                const filteredHeroes = heroes.filter(hero => 
+                    hero.name.toLowerCase().includes(query.toLowerCase())
+                );
+                console.log('過濾結果:', filteredHeroes);
+                renderHeroGrid(filteredHeroes);
+            } catch (error) {
+                console.error('過濾英雄時出錯:', error);
+            }
         }
 
         function renderHeroGrid(heroList) {
@@ -203,12 +212,22 @@
 
         async function loadHeroes() {
             try {
+                console.log('開始加載英雄數據...');
                 const response = await fetch('hero_data/hero_list.json');
+                console.log('Fetch response:', response);
+                
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                heroes = await response.json();
-                console.log('英雄數據加載成功:', heroes);
+                
+                const data = await response.json();
+                console.log('英雄數據加載成功:', data);
+                
+                if (!Array.isArray(data)) {
+                    throw new Error('數據格式錯誤：預期是數組');
+                }
+                
+                heroes = data;
                 
                 // 渲染英雄卡片
                 const heroGrid = document.getElementById('heroGrid');
@@ -218,13 +237,16 @@
                     card.className = 'hero-card';
                     card.onclick = () => window.location.href = `hero_items.html?hero=TFT13_${hero.name}`;
                     
+                    const heroName = hero.name;
+                    console.log('處理英雄:', heroName);
+                    
                     card.innerHTML = `
                         <div class="hero-header">
-                            <img src="tft13_character_images/tft13_${hero.name.toLowerCase()}_square.tft_set13.jpg" 
-                                 alt="${hero.name}" 
+                            <img src="tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg" 
+                                 alt="${heroName}" 
                                  class="hero-image"
-                                 onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%234A90E2\'/><text x=\'50\' y=\'50\' font-size=\'20\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>${hero.name.slice(0, 2).toUpperCase()}</text></svg>'">
-                            <h3 class="hero-name">${hero.name}</h3>
+                                 onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%234A90E2\'/><text x=\'50\' y=\'50\' font-size=\'20\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>${heroName.slice(0, 2).toUpperCase()}</text></svg>'">
+                            <h3 class="hero-name">${heroName}</h3>
                         </div>
                         <div class="hero-stats">
                             <div>
@@ -261,8 +283,15 @@
                 });
 
             } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('heroGrid').innerHTML = '<p>無法載入英雄數據</p>';
+                console.error('加載英雄數據時出錯:', error);
+                const heroGrid = document.getElementById('heroGrid');
+                heroGrid.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #dc3545;">
+                        <h2>無法載入英雄數據</h2>
+                        <p>錯誤信息: ${error.message}</p>
+                        <p>請檢查控制台以獲取更多信息</p>
+                    </div>
+                `;
             }
         }
 

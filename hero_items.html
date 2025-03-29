@@ -229,22 +229,28 @@
 
         async function loadData() {
             try {
+                console.log('開始加載英雄數據...');
                 // 從URL獲取英雄ID
                 const urlParams = new URLSearchParams(window.location.search);
                 const heroId = urlParams.get('hero');
+                console.log('英雄ID:', heroId);
                 
                 if (!heroId) {
                     throw new Error('未指定英雄');
                 }
 
                 // 載入英雄數據
-                const response = await fetch(`hero_data/${heroId}.json`);
+                const url = `hero_data/${heroId}.json`;
+                console.log('嘗試加載:', url);
+                const response = await fetch(url);
+                console.log('Fetch response:', response);
+                
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 
                 const data = await response.json();
-                console.log('數據加載成功:', data);
+                console.log('英雄數據加載成功:', data);
                 
                 // 更新頁面標題和英雄圖片
                 const heroName = heroId.replace('TFT13_', '');
@@ -252,9 +258,12 @@
                 
                 // 設置英雄圖片
                 const heroImage = document.getElementById('heroImage');
-                heroImage.src = `tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
+                const imagePath = `tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
+                console.log('英雄圖片路徑:', imagePath);
+                heroImage.src = imagePath;
                 heroImage.alt = heroName;
                 heroImage.onerror = () => {
+                    console.log('英雄圖片加載失敗，使用備用圖片');
                     heroImage.src = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" fill="%234A90E2"/><text x="40" y="50" font-size="24" fill="white" text-anchor="middle">${heroName.slice(0, 2).toUpperCase()}</text></svg>`;
                 };
 
@@ -272,6 +281,11 @@
                 document.getElementById('heroStats').innerHTML = statsHtml;
 
                 // 處理裝備數據
+                if (!Array.isArray(data.items)) {
+                    throw new Error('裝備數據格式錯誤');
+                }
+                
+                console.log('處理裝備數據:', data.items);
                 itemData = data.items.map(item => ({
                     item: item.name,
                     delta: item.delta,
@@ -291,9 +305,19 @@
                 });
 
             } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('heroStats').innerHTML = '無法載入英雄數據';
-                document.getElementById('itemTable').innerHTML = '無法載入裝備數據';
+                console.error('加載英雄數據時出錯:', error);
+                document.getElementById('heroStats').innerHTML = `
+                    <div style="color: #dc3545;">
+                        <p>無法載入英雄數據</p>
+                        <p>錯誤信息: ${error.message}</p>
+                    </div>
+                `;
+                document.getElementById('itemTable').innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #dc3545;">
+                        <h2>無法載入裝備數據</h2>
+                        <p>請檢查控制台以獲取更多信息</p>
+                    </div>
+                `;
             }
         }
 
