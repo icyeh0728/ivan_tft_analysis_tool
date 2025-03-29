@@ -51,37 +51,57 @@
             font-weight: bold;
             color: #555;
         }
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-        .item-card {
+        .table-container {
             background: white;
             border-radius: 8px;
-            padding: 15px;
+            padding: 20px;
+            margin-top: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
         }
-        .item-header {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+        th:hover {
+            background-color: #e9ecef;
+        }
+        .sort-icon::after {
+            content: '⇅';
+            margin-left: 5px;
+            color: #999;
+        }
+        .sort-asc::after {
+            content: '↑';
+            margin-left: 5px;
+            color: #333;
+        }
+        .sort-desc::after {
+            content: '↓';
+            margin-left: 5px;
+            color: #333;
+        }
+        .item-cell {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
         }
         .item-image {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 4px;
-        }
-        .item-name {
-            margin: 0;
-            font-size: 16px;
-            color: #333;
-        }
-        .item-stats {
-            display: grid;
-            gap: 5px;
         }
         .positive-delta {
             color: #28a745;
@@ -100,12 +120,6 @@
         }
         .back-button:hover {
             background: #357ABD;
-        }
-        #container {
-            background: white;
-            border-radius: 8px;
-            margin-top: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -142,12 +156,55 @@
             </div>
         </div>
         
-        <div id="itemsContainer" class="items-grid">
-            <!-- 裝備卡片將在這裡動態生成 -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-sort="name" class="sort-icon">裝備</th>
+                        <th data-sort="avgWithItem" class="sort-icon">平均名次</th>
+                        <th data-sort="delta" class="sort-icon">Delta</th>
+                        <th data-sort="games" class="sort-icon">使用次數</th>
+                        <th data-sort="usageRate" class="sort-icon">使用率</th>
+                    </tr>
+                </thead>
+                <tbody id="itemsTableBody">
+                    <!-- 裝備數據將在這裡動態生成 -->
+                </tbody>
+            </table>
         </div>
     </div>
 
     <script>
+        let currentSort = {
+            column: 'delta',
+            ascending: true
+        };
+
+        function sortItems(items, column) {
+            return [...items].sort((a, b) => {
+                let aValue = column === 'name' ? a.item : Number(a[column]) || 0;
+                let bValue = column === 'name' ? b.item : Number(b[column]) || 0;
+                
+                if (column === 'name') {
+                    return currentSort.ascending ? 
+                        aValue.localeCompare(bValue) : 
+                        bValue.localeCompare(aValue);
+                }
+                
+                return currentSort.ascending ? aValue - bValue : bValue - aValue;
+            });
+        }
+
+        function updateSortIcons(column) {
+            const headers = document.querySelectorAll('th');
+            headers.forEach(header => {
+                header.classList.remove('sort-asc', 'sort-desc');
+                if (header.dataset.sort === column) {
+                    header.classList.add(currentSort.ascending ? 'sort-asc' : 'sort-desc');
+                }
+            });
+        }
+
         async function loadData() {
             try {
                 console.log('開始加載英雄數據...');
@@ -172,17 +229,8 @@
                 
                 const data = await response.json();
                 console.log('英雄數據加載成功:', data);
-                console.log('數據類型:', typeof data);
-                console.log('數據結構:', JSON.stringify(data, null, 2));
                 
-                // 檢查數據結構
-                if (!data || typeof data !== 'object') {
-                    throw new Error('無效的數據格式');
-                }
-
-                // 檢查hero屬性
                 if (!data.hero || typeof data.hero !== 'object') {
-                    console.error('無效的hero數據:', data.hero);
                     throw new Error('無效的英雄數據格式');
                 }
                 
@@ -205,34 +253,15 @@
                 
                 // 更新英雄統計數據
                 const hero = data.hero;
-                console.log('英雄數據:', hero);
-
-                // 安全地獲取數值並轉換
-                const getNumberValue = (obj, key) => {
-                    const value = obj[key];
-                    if (value === undefined || value === null) {
-                        console.warn(`${key} 值不存在`);
-                        return 0;
-                    }
-                    const num = Number(value);
-                    if (isNaN(num)) {
-                        console.warn(`${key} 值無法轉換為數字:`, value);
-                        return 0;
-                    }
-                    return num;
-                };
-
-                // 更新統計數據
-                document.getElementById('avgPlacement').textContent = getNumberValue(hero, 'avgPlacement').toFixed(2);
-                document.getElementById('delta').textContent = getNumberValue(hero, 'delta').toFixed(2);
-                document.getElementById('totalGames').textContent = getNumberValue(hero, 'totalGames');
-                document.getElementById('winRate').textContent = `${getNumberValue(hero, 'winRate')}%`;
-                document.getElementById('top4Rate').textContent = `${getNumberValue(hero, 'top4Rate')}%`;
+                document.getElementById('avgPlacement').textContent = (Number(hero.avgPlacement) || 0).toFixed(2);
+                document.getElementById('delta').textContent = (Number(hero.delta) || 0).toFixed(2);
+                document.getElementById('totalGames').textContent = Number(hero.totalGames) || 0;
+                document.getElementById('winRate').textContent = `${Number(hero.winRate) || 0}%`;
+                document.getElementById('top4Rate').textContent = `${Number(hero.top4Rate) || 0}%`;
                 
                 // 設置Delta的顏色
                 const deltaElement = document.getElementById('delta');
-                const deltaStat = getNumberValue(hero, 'delta');
-                if (deltaStat < 0) {
+                if (Number(hero.delta) < 0) {
                     deltaElement.classList.add('negative-delta');
                     deltaElement.classList.remove('positive-delta');
                 } else {
@@ -240,69 +269,65 @@
                     deltaElement.classList.remove('negative-delta');
                 }
                 
-                // 渲染裝備列表
-                const itemsContainer = document.getElementById('itemsContainer');
-                itemsContainer.innerHTML = '';
-                
-                if (!Array.isArray(data.items)) {
-                    console.error('無效的items數據:', data.items);
-                    throw new Error('裝備數據格式錯誤');
+                // 渲染裝備表格
+                function renderTable(items) {
+                    const tbody = document.getElementById('itemsTableBody');
+                    tbody.innerHTML = '';
+                    
+                    items.forEach(item => {
+                        const row = document.createElement('tr');
+                        const itemName = item.item.replace('TFT_Item_', '').replace('TFT13_Item_', '');
+                        const itemImgSrc = `./tft13_item_images/tft_item_${itemName.toLowerCase()}.tft_set13.png`;
+                        
+                        row.innerHTML = `
+                            <td>
+                                <div class="item-cell">
+                                    <img src="${itemImgSrc}" 
+                                         alt="${itemName}" 
+                                         class="item-image"
+                                         onerror="this.onerror=null; this.src='data:image/svg+xml,${encodeURIComponent(
+                                             `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+                                                 <rect width="30" height="30" fill="#4A90E2"/>
+                                                 <text x="15" y="15" font-size="12" fill="white" text-anchor="middle" dominant-baseline="middle">
+                                                     ${itemName.slice(0, 2).toUpperCase()}
+                                                 </text>
+                                             </svg>`
+                                         )}';">
+                                    ${itemName}
+                                </div>
+                            </td>
+                            <td>${(Number(item.avgWithItem) || 0).toFixed(2)}</td>
+                            <td class="${Number(item.delta) < 0 ? 'negative-delta' : 'positive-delta'}">
+                                ${(Number(item.delta) || 0).toFixed(2)}
+                            </td>
+                            <td>${Number(item.games) || 0}</td>
+                            <td>${(Number(item.usageRate) || 0).toFixed(1)}%</td>
+                        `;
+                        
+                        tbody.appendChild(row);
+                    });
                 }
                 
-                console.log('裝備數量:', data.items.length);
+                // 初始化排序和表格
+                const sortedItems = sortItems(data.items, currentSort.column);
+                renderTable(sortedItems);
+                updateSortIcons(currentSort.column);
                 
-                data.items.forEach((item, index) => {
-                    if (!item || typeof item !== 'object') {
-                        console.warn(`跳過無效的裝備數據 [${index}]:`, item);
-                        return;
-                    }
-                    
-                    console.log(`處理裝備 [${index}]:`, item);
-                    
-                    const itemCard = document.createElement('div');
-                    itemCard.className = 'item-card';
-                    
-                    const itemName = (item.item || '').replace('TFT_Item_', '').replace('TFT13_Item_', '');
-                    const itemImgSrc = `./tft13_item_images/tft_item_${itemName.toLowerCase()}.tft_set13.png`;
-                    
-                    itemCard.innerHTML = `
-                        <div class="item-header">
-                            <img src="${itemImgSrc}" 
-                                 alt="${itemName}" 
-                                 class="item-image"
-                                 onerror="this.onerror=null; this.src='data:image/svg+xml,${encodeURIComponent(
-                                     `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-                                         <rect width="40" height="40" fill="#4A90E2"/>
-                                         <text x="20" y="20" font-size="12" fill="white" text-anchor="middle" dominant-baseline="middle">
-                                             ${itemName.slice(0, 2).toUpperCase()}
-                                         </text>
-                                     </svg>`
-                                 )}';">
-                            <h3 class="item-name">${itemName}</h3>
-                        </div>
-                        <div class="item-stats">
-                            <div>
-                                <span class="stat-label">平均名次:</span>
-                                <span>${getNumberValue(item, 'avgWithItem').toFixed(2)}</span>
-                            </div>
-                            <div>
-                                <span class="stat-label">Delta:</span>
-                                <span class="${getNumberValue(item, 'delta') < 0 ? 'negative-delta' : 'positive-delta'}">
-                                    ${getNumberValue(item, 'delta').toFixed(2)}
-                                </span>
-                            </div>
-                            <div>
-                                <span class="stat-label">使用次數:</span>
-                                <span>${getNumberValue(item, 'games')}</span>
-                            </div>
-                            <div>
-                                <span class="stat-label">使用率:</span>
-                                <span>${getNumberValue(item, 'usageRate').toFixed(1)}%</span>
-                            </div>
-                        </div>
-                    `;
-                    
-                    itemsContainer.appendChild(itemCard);
+                // 添加排序事件監聽器
+                document.querySelectorAll('th').forEach(header => {
+                    header.addEventListener('click', () => {
+                        const column = header.dataset.sort;
+                        if (currentSort.column === column) {
+                            currentSort.ascending = !currentSort.ascending;
+                        } else {
+                            currentSort.column = column;
+                            currentSort.ascending = true;
+                        }
+                        
+                        const sortedItems = sortItems(data.items, column);
+                        renderTable(sortedItems);
+                        updateSortIcons(column);
+                    });
                 });
                 
             } catch (error) {
