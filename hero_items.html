@@ -281,24 +281,47 @@
                     
                     items.forEach(item => {
                         const row = document.createElement('tr');
-                        const itemName = item.item.replace('TFT_Item_', '').replace('TFT13_Item_', '').replace('tft_item_', '').toLowerCase();
-                        const itemImgSrc = `/ivan_tft_analysis_tool/tft13_item_images/tft_item_${itemName}.png`;
+                        let itemName = item.item
+                            .replace('TFT_Item_', '')
+                            .replace('TFT13_Item_', '')
+                            .replace('tft_item_', '')
+                            .replace('tft13_', '')
+                            .replace('tft5_item_', '')
+                            .replace('tft4_item_', '')
+                            .replace('tft7_item_', '')
+                            .replace('tft9_item_', '')
+                            .replace('artifact_', '')
+                            .replace('support', '')
+                            .replace('.tft_set13', '')
+                            .toLowerCase();
+                            
+                        // 移除特定後綴
+                        itemName = itemName
+                            .replace('radiant', '')
+                            .replace('emblemitem', 'emblem');
+                            
+                        const displayName = itemName
+                            .split('_')
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(' ');
+                            
+                        const itemImgSrc = `/ivan_tft_analysis_tool/tft13_item_images/${itemName}.png`;
                         
                         row.innerHTML = `
                             <td>
                                 <div class="item-cell">
                                     <img src="${itemImgSrc}" 
-                                         alt="${itemName}" 
+                                         alt="${displayName}" 
                                          class="item-image"
                                          onerror="this.onerror=null; this.src='data:image/svg+xml,${encodeURIComponent(
                                              `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
                                                  <rect width="30" height="30" fill="#4A90E2"/>
                                                  <text x="15" y="15" font-size="12" fill="white" text-anchor="middle" dominant-baseline="middle">
-                                                     ${itemName.slice(0, 2).toUpperCase()}
+                                                     ${displayName.slice(0, 2).toUpperCase()}
                                                  </text>
                                              </svg>`
                                          )}';">
-                                    ${itemName.charAt(0).toUpperCase() + itemName.slice(1)}
+                                    ${displayName}
                                 </div>
                             </td>
                             <td>${(Number(item.avgWithItem) || 0).toFixed(2)}</td>
