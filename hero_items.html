@@ -127,9 +127,9 @@
     <a href="hero_list.html" class="back-button">← 返回英雄列表</a>
     
     <div id="container">
-        <div class="hero-header">
+    <div class="hero-header">
             <img id="heroImage" class="hero-image" alt="英雄圖片">
-            <div class="hero-info">
+        <div class="hero-info">
                 <h1 id="heroName" class="hero-name">載入中...</h1>
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -154,23 +154,23 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="table-container">
+    </div>
+    
+    <div class="table-container">
             <table>
-                <thead>
-                    <tr>
+            <thead>
+                <tr>
                         <th data-sort="name" class="sort-icon">裝備</th>
-                        <th data-sort="avgWithItem" class="sort-icon">平均名次</th>
+                    <th data-sort="avgWithItem" class="sort-icon">平均名次</th>
                         <th data-sort="delta" class="sort-icon">Delta</th>
                         <th data-sort="games" class="sort-icon">使用次數</th>
-                        <th data-sort="usageRate" class="sort-icon">使用率</th>
-                    </tr>
-                </thead>
+                    <th data-sort="usageRate" class="sort-icon">使用率</th>
+                </tr>
+            </thead>
                 <tbody id="itemsTableBody">
                     <!-- 裝備數據將在這裡動態生成 -->
-                </tbody>
-            </table>
+            </tbody>
+        </table>
         </div>
     </div>
 
@@ -232,21 +232,9 @@
                 }
                 
                 // 更新英雄圖片
-                const heroImgSrc = `/ivan_tft_analysis_tool/tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
+                const heroImgSrc = `./tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
                 const heroImg = document.getElementById('heroImage');
                 heroImg.src = heroImgSrc;
-                heroImg.onerror = function() {
-                    this.onerror = null;
-                    const fallbackSvg = `data:image/svg+xml,${encodeURIComponent(
-                        `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-                            <rect width="100" height="100" fill="#4A90E2"/>
-                            <text x="50" y="50" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">
-                                ${heroName.slice(0, 2).toUpperCase()}
-                            </text>
-                        </svg>`
-                    )}`;
-                    this.src = fallbackSvg;
-                };
                 
                 // 更新英雄統計數據
                 const hero = data.hero;
@@ -275,35 +263,25 @@
                     tbody.innerHTML = '';
                     
                     items.forEach(item => {
-                        // 處理顯示名稱
-                        let displayName = item.item
-                            .replace(/^TFT_Item_|^TFT13_Item_|^tft_item_|^tft13_|^tft5_item_|^tft4_item_|^tft7_item_|^tft9_item_|^artifact_|^support/gi, '')
-                            .replace(/\.tft_set13$/, '')
-                            .replace(/radiant$/, '')
-                            .replace(/emblemitem$/, 'emblem')
-                            .replace(/[_-]/g, ' ')
-                            .split(' ')
-                            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                            .join(' ');
-
-                        // 直接生成SVG圖形作為裝備圖示
-                        const svgImage = `data:image/svg+xml,${encodeURIComponent(
-                            `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
-                                <rect width="30" height="30" fill="#4A90E2"/>
-                                <text x="15" y="15" font-size="12" fill="white" text-anchor="middle" dominant-baseline="middle">
-                                    ${displayName.slice(0, 2).toUpperCase()}
-                                </text>
-                            </svg>`
-                        )}`;
+                        // 直接使用原始裝備名稱載入圖片
+                        const itemImgSrc = `./tft13_item_images/${item.item.toLowerCase()}.png`;
                         
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>
                                 <div class="item-cell">
-                                    <img src="${svgImage}" 
-                                         alt="${displayName}" 
-                                         class="item-image">
-                                    ${displayName}
+                                    <img src="${itemImgSrc}" 
+                                         alt="${item.item}" 
+                                         class="item-image"
+                                         onerror="this.onerror=null; this.src='data:image/svg+xml,${encodeURIComponent(
+                                             `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+                                                 <rect width="30" height="30" fill="#4A90E2"/>
+                                                 <text x="15" y="15" font-size="12" fill="white" text-anchor="middle" dominant-baseline="middle">
+                                                     ${item.item.slice(0, 2).toUpperCase()}
+                                                 </text>
+                                             </svg>`
+                                         )}';">
+                                    ${item.item}
                                 </div>
                             </td>
                             <td>${(Number(item.avgWithItem) || 0).toFixed(2)}</td>
@@ -343,7 +321,7 @@
                 `;
             }
         }
-
+        
         loadData();
     </script>
 </body>
