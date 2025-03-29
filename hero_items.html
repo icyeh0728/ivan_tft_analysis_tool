@@ -230,20 +230,18 @@
         async function loadData() {
             try {
                 console.log('開始加載英雄數據...');
-                // 從URL獲取英雄ID
                 const urlParams = new URLSearchParams(window.location.search);
                 const heroId = urlParams.get('hero');
-                console.log('英雄ID:', heroId);
                 
                 if (!heroId) {
-                    throw new Error('未指定英雄');
+                    throw new Error('未指定英雄ID');
                 }
-
-                // 載入英雄數據
-                const url = `hero_data/${heroId}.json`;
-                console.log('嘗試加載:', url);
-                const response = await fetch(url);
-                console.log('Fetch response:', response);
+                
+                console.log('英雄ID:', heroId);
+                document.getElementById('heroId').textContent = heroId;
+                
+                const response = await fetch(`hero_data/${heroId}.json`);
+                console.log('嘗試加載:', `hero_data/${heroId}.json`);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -252,76 +250,123 @@
                 const data = await response.json();
                 console.log('英雄數據加載成功:', data);
                 
-                // 更新頁面標題和英雄圖片
-                const heroName = heroId.replace('TFT13_', '');
-                document.title = `${heroName} - 裝備分析`;
-                
-                // 設置英雄圖片
-                const heroImage = document.getElementById('heroImage');
-                const imagePath = `tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
-                console.log('英雄圖片路徑:', imagePath);
-                heroImage.src = imagePath;
-                heroImage.alt = heroName;
-                heroImage.onerror = () => {
-                    console.log('英雄圖片加載失敗，使用備用圖片');
-                    heroImage.src = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" fill="%234A90E2"/><text x="40" y="50" font-size="24" fill="white" text-anchor="middle">${heroName.slice(0, 2).toUpperCase()}</text></svg>`;
-                };
-
-                // 更新英雄名稱
-                document.getElementById('heroName').textContent = heroName;
-
-                // 更新英雄統計數據
-                const statsHtml = `
-                    平均名次: ${data.avgPlacement.toFixed(2)} | 
-                    Delta: <span class="${data.delta < 0 ? 'negative-delta' : 'positive-delta'}">${data.delta.toFixed(2)}</span> | 
-                    總場次: ${data.totalGames} | 
-                    勝率: ${data.winRate}% | 
-                    前四率: ${data.top4Rate}%
-                `;
-                document.getElementById('heroStats').innerHTML = statsHtml;
-
-                // 處理裝備數據
-                if (!Array.isArray(data.items)) {
-                    throw new Error('裝備數據格式錯誤');
+                // 驗證數據結構
+                if (!data || typeof data !== 'object') {
+                    throw new Error('無效的數據格式');
                 }
                 
-                console.log('處理裝備數據:', data.items);
-                itemData = data.items.map(item => ({
-                    item: item.name,
-                    delta: item.delta,
-                    avgWithItem: item.avgPlacementWithItem,
-                    usage: item.gamesWithItem,
-                    usageRate: ((item.gamesWithItem / data.totalGames) * 100).toFixed(1)
-                }));
-
-                // 渲染表格
-                renderTable();
-
-                // 添加表格排序事件監聽器
-                document.querySelectorAll('th').forEach(header => {
-                    header.addEventListener('click', () => {
-                        sortTable(header.dataset.sort);
-                    });
+                const { hero, items } = data;
+                
+                if (!hero || !items || !Array.isArray(items)) {
+                    throw new Error('數據結構不完整');
+                }
+                
+                // 更新英雄圖片
+                const heroImgSrc = `./tft13_character_images/tft13_${hero.name.toLowerCase()}_square.tft_set13.jpg`;
+                const heroImg = document.getElementById('heroImage');
+                heroImg.src = heroImgSrc;
+                heroImg.onerror = function() {
+                    this.onerror = null;
+                    const fallbackSvg = `data:image/svg+xml,${encodeURIComponent(
+                        `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+                            <rect width="100" height="100" fill="#4A90E2"/>
+                            <text x="50" y="50" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">
+                                ${hero.name.slice(0, 2).toUpperCase()}
+                            </text>
+                        </svg>`
+                    )}`;
+                    this.src = fallbackSvg;
+                };
+                
+                // 更新英雄統計數據
+                document.getElementById('avgPlacement').textContent = (Number(hero.avgPlacement) || 0).toFixed(2);
+                document.getElementById('delta').textContent = (Number(hero.delta) || 0).toFixed(2);
+                document.getElementById('totalGames').textContent = Number(hero.totalGames) || 0;
+                document.getElementById('winRate').textContent = `${Number(hero.winRate) || 0}%`;
+                document.getElementById('top4Rate').textContent = `${Number(hero.top4Rate) || 0}%`;
+                
+                // 設置Delta的顏色
+                const deltaElement = document.getElementById('delta');
+                if (Number(hero.delta) < 0) {
+                    deltaElement.classList.add('positive-delta');
+                    deltaElement.classList.remove('negative-delta');
+                } else {
+                    deltaElement.classList.add('negative-delta');
+                    deltaElement.classList.remove('positive-delta');
+                }
+                
+                // 渲染裝備列表
+                const itemsContainer = document.getElementById('itemsContainer');
+                itemsContainer.innerHTML = '';
+                
+                items.forEach(item => {
+                    if (!item || typeof item !== 'object') {
+                        console.warn('跳過無效的裝備數據:', item);
+                        return;
+                    }
+                    
+                    const itemCard = document.createElement('div');
+                    itemCard.className = 'item-card';
+                    
+                    const itemImgSrc = `./tft13_item_images/${item.id.toLowerCase()}.tft_set13.png`;
+                    
+                    itemCard.innerHTML = `
+                        <div class="item-header">
+                            <img src="${itemImgSrc}" 
+                                 alt="${item.name || '未知裝備'}" 
+                                 class="item-image"
+                                 onerror="this.onerror=null; this.src='data:image/svg+xml,${encodeURIComponent(
+                                     `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60">
+                                         <rect width="60" height="60" fill="#4A90E2"/>
+                                         <text x="30" y="30" font-size="12" fill="white" text-anchor="middle" dominant-baseline="middle">
+                                             ${(item.name || '??').slice(0, 2).toUpperCase()}
+                                         </text>
+                                     </svg>`
+                                 )}';">
+                            <h3 class="item-name">${item.name || '未知裝備'}</h3>
+                        </div>
+                        <div class="item-stats">
+                            <div>
+                                <span class="stat-label">平均名次:</span>
+                                <span>${(Number(item.avgPlacement) || 0).toFixed(2)}</span>
+                            </div>
+                            <div>
+                                <span class="stat-label">Delta:</span>
+                                <span class="${(Number(item.delta) || 0) < 0 ? 'positive-delta' : 'negative-delta'}">
+                                    ${(Number(item.delta) || 0).toFixed(2)}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="stat-label">使用次數:</span>
+                                <span>${Number(item.totalGames) || 0}</span>
+                            </div>
+                            <div>
+                                <span class="stat-label">勝率:</span>
+                                <span>${Number(item.winRate) || 0}%</span>
+                            </div>
+                            <div>
+                                <span class="stat-label">前四率:</span>
+                                <span>${Number(item.top4Rate) || 0}%</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    itemsContainer.appendChild(itemCard);
                 });
-
+                
             } catch (error) {
-                console.error('加載英雄數據時出錯:', error);
-                document.getElementById('heroStats').innerHTML = `
-                    <div style="color: #dc3545;">
-                        <p>無法載入英雄數據</p>
-                        <p>錯誤信息: ${error.message}</p>
-                    </div>
-                `;
-                document.getElementById('itemTable').innerHTML = `
+                console.error('加載數據時出錯:', error);
+                const container = document.getElementById('container');
+                container.innerHTML = `
                     <div style="text-align: center; padding: 20px; color: #dc3545;">
-                        <h2>無法載入裝備數據</h2>
+                        <h2>無法載入英雄數據</h2>
+                        <p>錯誤信息: ${error.message}</p>
                         <p>請檢查控制台以獲取更多信息</p>
                     </div>
                 `;
             }
         }
 
-        // 載入數據
         loadData();
     </script>
 </body>
