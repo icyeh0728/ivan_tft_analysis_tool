@@ -231,8 +231,12 @@
                         currentSort.ascending = true; // 名稱默認按字母升序
                     } else if (key === 'avgPlacement') {
                         currentSort.ascending = true; // 平均名次默認升序(越小越好)
+                    } else if (key === 'delta') {
+                        currentSort.ascending = true; // Delta值默認升序(負值越小越好)
+                    } else if (key === 'winRate' || key === 'top4Rate' || key === 'totalGames') {
+                        currentSort.ascending = false; // 勝率、前四率、使用次數默認降序(越大越好)
                     } else {
-                        currentSort.ascending = false; // 其他數值默認降序(越大越好)
+                        currentSort.ascending = false; // 其他數值默認降序
                     }
                 }
 
