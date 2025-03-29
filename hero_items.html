@@ -305,6 +305,18 @@
                             itemImgSrc = `./tft13_item_images/tft_item_artifact_${artifactName}.tft_set13.png`;
                             console.log("神器圖片路徑:", itemImgSrc);
                         } 
+                        // 處理輻射(Radiant)裝備
+                        else if (rawItemName.includes('radiant') || item.item.includes('TFT5_Item_')) {
+                            // 從原始名稱中提取關鍵部分
+                            const radiantName = item.item
+                                .replace(/^TFT5_Item_|^tft5_item_/i, '')
+                                .replace(/radiant$/i, '')
+                                .replace(/\.tft_set13$/i, '')
+                                .toLowerCase();
+                            
+                            itemImgSrc = `./tft13_item_images/tft5_item_${radiantName}radiant.tft_set13.png`;
+                            console.log("輻射裝備圖片路徑:", itemImgSrc);
+                        }
                         // 處理其他標準裝備
                         else {
                             itemName = item.item
