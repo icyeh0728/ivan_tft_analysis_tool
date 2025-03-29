@@ -232,7 +232,7 @@
                 }
                 
                 // 更新英雄圖片
-                const heroImgSrc = `./tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
+                const heroImgSrc = `/ivan_tft_analysis_tool/tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg`;
                 const heroImg = document.getElementById('heroImage');
                 heroImg.src = heroImgSrc;
                 heroImg.onerror = function() {
@@ -278,8 +278,8 @@
                         // 處理原始裝備名稱用於加載圖片
                         const itemName = item.item.toLowerCase();
                         
-                        // 直接使用原始裝備名稱載入圖片
-                        const itemImgSrc = `./tft13_item_images/${itemName}.png`;
+                        // 使用絕對路徑載入圖片，適配GitHub Pages
+                        const itemImgSrc = `/ivan_tft_analysis_tool/tft13_item_images/${itemName}.png`;
                         
                         // 處理顯示名稱
                         let displayName = item.item
