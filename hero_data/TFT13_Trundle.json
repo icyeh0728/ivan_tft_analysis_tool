@@ -1,0 +1,852 @@
+{
+  "hero": {
+    "name": "Trundle",
+    "avgPlacement": 4.67,
+    "totalGames": 2947,
+    "winRate": 11.8,
+    "top4Rate": 46.6,
+    "delta": 0.17
+  },
+  "items": [
+    {
+      "item": "TFT_Item_EmptyBag",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 1.0,
+      "delta": -3.676
+    },
+    {
+      "item": "TFT5_Item_GargoyleStoneplateRadiant",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 1.0,
+      "delta": -3.676
+    },
+    {
+      "item": "TFT5_Item_SpectralGauntletRadiant",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 1.0,
+      "delta": -3.676
+    },
+    {
+      "item": "TFT4_Item_OrnnTheCollector",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 1.0,
+      "delta": -3.674
+    },
+    {
+      "item": "TFT5_Item_BrambleVestRadiant",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 1.0,
+      "delta": -3.674
+    },
+    {
+      "item": "TFT_Item_Artifact_ProwlersClaw",
+      "games": 6,
+      "usageRate": 0.2,
+      "avgWithItem": 1.833,
+      "delta": -2.846
+    },
+    {
+      "item": "TFT_Item_Artifact_SpectralCutlass",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 2.0,
+      "delta": -2.675
+    },
+    {
+      "item": "TFT_Item_Artifact_TalismanOfAscension",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 2.0,
+      "delta": -2.674
+    },
+    {
+      "item": "TFT_Item_Artifact_RapidFirecannon",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 2.333,
+      "delta": -2.342
+    },
+    {
+      "item": "TFT4_Item_OrnnInfinityForce",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 2.667,
+      "delta": -2.009
+    },
+    {
+      "item": "TFT5_Item_BloodthirsterRadiant",
+      "games": 6,
+      "usageRate": 0.2,
+      "avgWithItem": 2.833,
+      "delta": -1.844
+    },
+    {
+      "item": "TFT13_Item_SquadEmblemItem",
+      "games": 20,
+      "usageRate": 0.7,
+      "avgWithItem": 3.0,
+      "delta": -1.685
+    },
+    {
+      "item": "TFT13_Item_FamilyEmblemItem",
+      "games": 14,
+      "usageRate": 0.5,
+      "avgWithItem": 3.0,
+      "delta": -1.681
+    },
+    {
+      "item": "TFT_Item_Zephyr",
+      "games": 5,
+      "usageRate": 0.2,
+      "avgWithItem": 3.2,
+      "delta": -1.476
+    },
+    {
+      "item": "TFT5_Item_RedemptionRadiant",
+      "games": 4,
+      "usageRate": 0.1,
+      "avgWithItem": 3.25,
+      "delta": -1.425
+    },
+    {
+      "item": "TFT13_Item_RebelEmblemItem",
+      "games": 16,
+      "usageRate": 0.5,
+      "avgWithItem": 3.312,
+      "delta": -1.368
+    },
+    {
+      "item": "TFT5_Item_FrozenHeartRadiant",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 3.333,
+      "delta": -1.341
+    },
+    {
+      "item": "TFT_Item_JeweledGauntlet",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 3.333,
+      "delta": -1.341
+    },
+    {
+      "item": "TFT_Item_MadredsBloodrazor",
+      "games": 5,
+      "usageRate": 0.2,
+      "avgWithItem": 3.4,
+      "delta": -1.275
+    },
+    {
+      "item": "TFT_Item_ForceOfNature",
+      "games": 18,
+      "usageRate": 0.6,
+      "avgWithItem": 3.667,
+      "delta": -1.013
+    },
+    {
+      "item": "TFT_Item_TacticiansRing",
+      "games": 13,
+      "usageRate": 0.4,
+      "avgWithItem": 3.692,
+      "delta": -0.985
+    },
+    {
+      "item": "TFT13_Item_CabalEmblemItem",
+      "games": 13,
+      "usageRate": 0.4,
+      "avgWithItem": 3.692,
+      "delta": -0.985
+    },
+    {
+      "item": "TFT_Item_Spite",
+      "games": 6,
+      "usageRate": 0.2,
+      "avgWithItem": 3.833,
+      "delta": -0.842
+    },
+    {
+      "item": "TFT5_Item_HandOfJusticeRadiant",
+      "games": 6,
+      "usageRate": 0.2,
+      "avgWithItem": 3.833,
+      "delta": -0.842
+    },
+    {
+      "item": "TFT13_Item_HoverboardEmblemItem",
+      "games": 20,
+      "usageRate": 0.7,
+      "avgWithItem": 4.0,
+      "delta": -0.678
+    },
+    {
+      "item": "TFT13_Item_AutomataEmblemItem",
+      "games": 15,
+      "usageRate": 0.5,
+      "avgWithItem": 4.0,
+      "delta": -0.677
+    },
+    {
+      "item": "TFT13_Item_WatcherEmblemItem",
+      "games": 17,
+      "usageRate": 0.6,
+      "avgWithItem": 4.0,
+      "delta": -0.677
+    },
+    {
+      "item": "TFT_Item_Shroud",
+      "games": 8,
+      "usageRate": 0.3,
+      "avgWithItem": 4.0,
+      "delta": -0.675
+    },
+    {
+      "item": "TFT_Item_PowerGauntlet",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 4.0,
+      "delta": -0.674
+    },
+    {
+      "item": "TFT_Item_Artifact_SilvermereDawn",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 4.0,
+      "delta": -0.674
+    },
+    {
+      "item": "TFT7_Item_ShimmerscaleHeartOfGold",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 4.0,
+      "delta": -0.674
+    },
+    {
+      "item": "TFT_Item_RapidFireCannon",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 4.0,
+      "delta": -0.673
+    },
+    {
+      "item": "TFT5_Item_NightHarvesterRadiant",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 4.0,
+      "delta": -0.673
+    },
+    {
+      "item": "TFT_Item_GuardianAngel",
+      "games": 9,
+      "usageRate": 0.3,
+      "avgWithItem": 4.111,
+      "delta": -0.564
+    },
+    {
+      "item": "TFT_Item_LocketOfTheIronSolari",
+      "games": 26,
+      "usageRate": 0.9,
+      "avgWithItem": 4.115,
+      "delta": -0.563
+    },
+    {
+      "item": "TFT13_Item_DemolitionistEmblemItem",
+      "games": 18,
+      "usageRate": 0.6,
+      "avgWithItem": 4.167,
+      "delta": -0.51
+    },
+    {
+      "item": "TFT_Item_FrozenHeart",
+      "games": 17,
+      "usageRate": 0.6,
+      "avgWithItem": 4.176,
+      "delta": -0.5
+    },
+    {
+      "item": "TFT_Item_NeedlesslyLargeRod",
+      "games": 60,
+      "usageRate": 2.0,
+      "avgWithItem": 4.2,
+      "delta": -0.483
+    },
+    {
+      "item": "TFT_Item_InfinityEdge",
+      "games": 5,
+      "usageRate": 0.2,
+      "avgWithItem": 4.2,
+      "delta": -0.474
+    },
+    {
+      "item": "TFT_Item_TitansResolve",
+      "games": 197,
+      "usageRate": 6.7,
+      "avgWithItem": 4.239,
+      "delta": -0.466
+    },
+    {
+      "item": "TFT_Item_NightHarvester",
+      "games": 23,
+      "usageRate": 0.8,
+      "avgWithItem": 4.217,
+      "delta": -0.459
+    },
+    {
+      "item": "TFT_Item_Spatula",
+      "games": 8,
+      "usageRate": 0.3,
+      "avgWithItem": 4.25,
+      "delta": -0.424
+    },
+    {
+      "item": "TFT4_Item_OrnnRocketPropelledFist",
+      "games": 8,
+      "usageRate": 0.3,
+      "avgWithItem": 4.25,
+      "delta": -0.424
+    },
+    {
+      "item": "TFT_Item_UnstableConcoction",
+      "games": 134,
+      "usageRate": 4.5,
+      "avgWithItem": 4.284,
+      "delta": -0.408
+    },
+    {
+      "item": "TFT_Item_RadiantVirtue",
+      "games": 9,
+      "usageRate": 0.3,
+      "avgWithItem": 4.333,
+      "delta": -0.341
+    },
+    {
+      "item": "TFT13_Item_InvokerEmblemItem",
+      "games": 6,
+      "usageRate": 0.2,
+      "avgWithItem": 4.333,
+      "delta": -0.341
+    },
+    {
+      "item": "TFT_Item_Deathblade",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 4.333,
+      "delta": -0.34
+    },
+    {
+      "item": "TFT7_Item_ShimmerscaleMogulsMail",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 4.333,
+      "delta": -0.34
+    },
+    {
+      "item": "TFT_Item_Artifact_Fishbones",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 4.333,
+      "delta": -0.34
+    },
+    {
+      "item": "TFT_Item_Redemption",
+      "games": 56,
+      "usageRate": 1.9,
+      "avgWithItem": 4.357,
+      "delta": -0.322
+    },
+    {
+      "item": "TFT_Item_Quicksilver",
+      "games": 31,
+      "usageRate": 1.1,
+      "avgWithItem": 4.355,
+      "delta": -0.322
+    },
+    {
+      "item": "TFT_Item_Bloodthirster",
+      "games": 186,
+      "usageRate": 6.3,
+      "avgWithItem": 4.403,
+      "delta": -0.288
+    },
+    {
+      "item": "TFT_Item_Leviathan",
+      "games": 5,
+      "usageRate": 0.2,
+      "avgWithItem": 4.4,
+      "delta": -0.274
+    },
+    {
+      "item": "TFT_Item_GargoyleStoneplate",
+      "games": 54,
+      "usageRate": 1.8,
+      "avgWithItem": 4.407,
+      "delta": -0.271
+    },
+    {
+      "item": "TFT13_Item_PitFighterEmblemItem",
+      "games": 17,
+      "usageRate": 0.6,
+      "avgWithItem": 4.412,
+      "delta": -0.263
+    },
+    {
+      "item": "TFT13_Item_ExperimentEmblemItem",
+      "games": 24,
+      "usageRate": 0.8,
+      "avgWithItem": 4.417,
+      "delta": -0.259
+    },
+    {
+      "item": "TFT_Item_SpectralGauntlet",
+      "games": 131,
+      "usageRate": 4.4,
+      "avgWithItem": 4.427,
+      "delta": -0.257
+    },
+    {
+      "item": "TFT_Item_AdaptiveHelm",
+      "games": 14,
+      "usageRate": 0.5,
+      "avgWithItem": 4.429,
+      "delta": -0.246
+    },
+    {
+      "item": "TFT13_Item_TitanEmblemItem",
+      "games": 44,
+      "usageRate": 1.5,
+      "avgWithItem": 4.432,
+      "delta": -0.245
+    },
+    {
+      "item": "TFT_Item_ChainVest",
+      "games": 610,
+      "usageRate": 20.7,
+      "avgWithItem": 4.485,
+      "delta": -0.237
+    },
+    {
+      "item": "TFT13_Item_WarbandEmblemItem",
+      "games": 12,
+      "usageRate": 0.4,
+      "avgWithItem": 4.5,
+      "delta": -0.174
+    },
+    {
+      "item": "TFT13_Item_ChallengerEmblemItem",
+      "games": 7,
+      "usageRate": 0.2,
+      "avgWithItem": 4.571,
+      "delta": -0.102
+    },
+    {
+      "item": "TFT_Item_TacticiansScepter",
+      "games": 12,
+      "usageRate": 0.4,
+      "avgWithItem": 4.583,
+      "delta": -0.09
+    },
+    {
+      "item": "TFT13_Item_SorcererEmblemItem",
+      "games": 15,
+      "usageRate": 0.5,
+      "avgWithItem": 4.6,
+      "delta": -0.074
+    },
+    {
+      "item": "TFT_Item_Chalice",
+      "games": 10,
+      "usageRate": 0.3,
+      "avgWithItem": 4.6,
+      "delta": -0.073
+    },
+    {
+      "item": "TFT_Item_RedBuff",
+      "games": 204,
+      "usageRate": 6.9,
+      "avgWithItem": 4.608,
+      "delta": -0.07
+    },
+    {
+      "item": "TFT_Item_IonicSpark",
+      "games": 168,
+      "usageRate": 5.7,
+      "avgWithItem": 4.613,
+      "delta": -0.064
+    },
+    {
+      "item": "TFT_Item_ThiefsGloves",
+      "games": 31,
+      "usageRate": 1.1,
+      "avgWithItem": 4.645,
+      "delta": -0.028
+    },
+    {
+      "item": "TFT_Item_BlueBuff",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 4.667,
+      "delta": -0.007
+    },
+    {
+      "item": "TFT_Item_SteraksGage",
+      "games": 22,
+      "usageRate": 0.7,
+      "avgWithItem": 4.682,
+      "delta": 0.009
+    },
+    {
+      "item": "TFT_Item_RecurveBow",
+      "games": 61,
+      "usageRate": 2.1,
+      "avgWithItem": 4.689,
+      "delta": 0.016
+    },
+    {
+      "item": "TFT_Item_NegatronCloak",
+      "games": 384,
+      "usageRate": 13.0,
+      "avgWithItem": 4.703,
+      "delta": 0.034
+    },
+    {
+      "item": "TFT_Item_BrambleVest",
+      "games": 45,
+      "usageRate": 1.5,
+      "avgWithItem": 4.711,
+      "delta": 0.038
+    },
+    {
+      "item": "TFT5_Item_TitansResolveRadiant",
+      "games": 11,
+      "usageRate": 0.4,
+      "avgWithItem": 4.727,
+      "delta": 0.054
+    },
+    {
+      "item": "TFT_Item_Artifact_LightshieldCrest",
+      "games": 8,
+      "usageRate": 0.3,
+      "avgWithItem": 4.75,
+      "delta": 0.077
+    },
+    {
+      "item": "TFT_Item_GiantsBelt",
+      "games": 343,
+      "usageRate": 11.6,
+      "avgWithItem": 4.755,
+      "delta": 0.093
+    },
+    {
+      "item": "TFT_Item_TearOfTheGoddess",
+      "games": 121,
+      "usageRate": 4.1,
+      "avgWithItem": 4.785,
+      "delta": 0.117
+    },
+    {
+      "item": "TFT5_Item_SunfireCapeRadiant",
+      "games": 5,
+      "usageRate": 0.2,
+      "avgWithItem": 4.8,
+      "delta": 0.127
+    },
+    {
+      "item": "TFT_Item_BFSword",
+      "games": 50,
+      "usageRate": 1.7,
+      "avgWithItem": 4.84,
+      "delta": 0.17
+    },
+    {
+      "item": "TFT_Item_ZekesHerald",
+      "games": 24,
+      "usageRate": 0.8,
+      "avgWithItem": 4.875,
+      "delta": 0.203
+    },
+    {
+      "item": "TFT4_Item_OrnnRanduinsSanctum",
+      "games": 32,
+      "usageRate": 1.1,
+      "avgWithItem": 4.875,
+      "delta": 0.204
+    },
+    {
+      "item": "NoItems",
+      "games": 693,
+      "usageRate": 23.5,
+      "avgWithItem": 4.835,
+      "delta": 0.212
+    },
+    {
+      "item": "TFT_Item_SparringGloves",
+      "games": 59,
+      "usageRate": 2.0,
+      "avgWithItem": 4.915,
+      "delta": 0.247
+    },
+    {
+      "item": "TFT_Item_UnstableTreasureChest",
+      "games": 4,
+      "usageRate": 0.1,
+      "avgWithItem": 5.0,
+      "delta": 0.327
+    },
+    {
+      "item": "TFT_Item_Artifact_Mittens",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 5.0,
+      "delta": 0.327
+    },
+    {
+      "item": "TFT_Item_StatikkShiv",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 5.0,
+      "delta": 0.327
+    },
+    {
+      "item": "TFT5_Item_IonicSparkRadiant",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 5.0,
+      "delta": 0.327
+    },
+    {
+      "item": "TFT5_Item_DragonsClawRadiant",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 5.0,
+      "delta": 0.327
+    },
+    {
+      "item": "TFT13_Item_AmbusherEmblemItem",
+      "games": 8,
+      "usageRate": 0.3,
+      "avgWithItem": 5.0,
+      "delta": 0.328
+    },
+    {
+      "item": "TFT5_Item_ZzRotPortalRadiant",
+      "games": 11,
+      "usageRate": 0.4,
+      "avgWithItem": 5.0,
+      "delta": 0.328
+    },
+    {
+      "item": "TFT13_Item_InfusedEmblemItem",
+      "games": 16,
+      "usageRate": 0.5,
+      "avgWithItem": 5.062,
+      "delta": 0.391
+    },
+    {
+      "item": "TFT_Item_Artifact_UnendingDespair",
+      "games": 7,
+      "usageRate": 0.2,
+      "avgWithItem": 5.143,
+      "delta": 0.471
+    },
+    {
+      "item": "TFT_Item_WarmogsArmor",
+      "games": 73,
+      "usageRate": 2.5,
+      "avgWithItem": 5.288,
+      "delta": 0.63
+    },
+    {
+      "item": "TFT_Item_Crownguard",
+      "games": 13,
+      "usageRate": 0.4,
+      "avgWithItem": 5.308,
+      "delta": 0.637
+    },
+    {
+      "item": "TFT_Item_LastWhisper",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 5.333,
+      "delta": 0.661
+    },
+    {
+      "item": "TFT_Item_BansheesVeil",
+      "games": 6,
+      "usageRate": 0.2,
+      "avgWithItem": 5.333,
+      "delta": 0.661
+    },
+    {
+      "item": "TFT_Item_DragonsClaw",
+      "games": 30,
+      "usageRate": 1.0,
+      "avgWithItem": 5.467,
+      "delta": 0.802
+    },
+    {
+      "item": "TFT_Item_GuinsoosRageblade",
+      "games": 19,
+      "usageRate": 0.6,
+      "avgWithItem": 5.474,
+      "delta": 0.806
+    },
+    {
+      "item": "TFT_Item_Moonstone",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 5.5,
+      "delta": 0.827
+    },
+    {
+      "item": "TFT_Item_EternalFlame",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 5.5,
+      "delta": 0.827
+    },
+    {
+      "item": "TFT_Item_AegisOfTheLegion",
+      "games": 12,
+      "usageRate": 0.4,
+      "avgWithItem": 5.583,
+      "delta": 0.914
+    },
+    {
+      "item": "TFT13_Item_AcademyEmblemItem",
+      "games": 13,
+      "usageRate": 0.4,
+      "avgWithItem": 5.692,
+      "delta": 1.024
+    },
+    {
+      "item": "TFT_Item_RunaansHurricane",
+      "games": 10,
+      "usageRate": 0.3,
+      "avgWithItem": 5.8,
+      "delta": 1.131
+    },
+    {
+      "item": "TFT_Item_RabadonsDeathcap",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 6.0,
+      "delta": 1.327
+    },
+    {
+      "item": "TFT9_Item_OrnnHullbreaker",
+      "games": 5,
+      "usageRate": 0.2,
+      "avgWithItem": 6.0,
+      "delta": 1.329
+    },
+    {
+      "item": "TFT4_Item_OrnnDeathsDefiance",
+      "games": 5,
+      "usageRate": 0.2,
+      "avgWithItem": 6.0,
+      "delta": 1.329
+    },
+    {
+      "item": "TFT_Item_ArchangelsStaff",
+      "games": 4,
+      "usageRate": 0.1,
+      "avgWithItem": 6.0,
+      "delta": 1.329
+    },
+    {
+      "item": "TFT_Item_Artifact_SuspiciousTrenchCoat",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 6.5,
+      "delta": 1.828
+    },
+    {
+      "item": "TFT_Item_SupportKnightsVow",
+      "games": 5,
+      "usageRate": 0.2,
+      "avgWithItem": 6.8,
+      "delta": 2.13
+    },
+    {
+      "item": "TFT13_Item_SniperEmblemItem",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 7.0,
+      "delta": 2.328
+    },
+    {
+      "item": "TFT4_Item_OrnnAnimaVisage",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 7.0,
+      "delta": 2.328
+    },
+    {
+      "item": "TFT9_Item_OrnnHorizonFocus",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 7.0,
+      "delta": 2.328
+    },
+    {
+      "item": "TFT5_Item_WarmogsArmorRadiant",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 7.0,
+      "delta": 2.329
+    },
+    {
+      "item": "TFT_Item_HextechGunblade",
+      "games": 3,
+      "usageRate": 0.1,
+      "avgWithItem": 7.0,
+      "delta": 2.329
+    },
+    {
+      "item": "TFT5_Item_GuinsoosRagebladeRadiant",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 8.0,
+      "delta": 3.328
+    },
+    {
+      "item": "TFT_Item_Artifact_SeekersArmguard",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 8.0,
+      "delta": 3.328
+    },
+    {
+      "item": "TFT5_Item_CrownguardRadiant",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 8.0,
+      "delta": 3.328
+    },
+    {
+      "item": "TFT5_Item_QuicksilverRadiant",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 8.0,
+      "delta": 3.328
+    },
+    {
+      "item": "TFT9_Item_OrnnTrickstersGlass",
+      "games": 1,
+      "usageRate": 0.0,
+      "avgWithItem": 8.0,
+      "delta": 3.328
+    },
+    {
+      "item": "TFT_Item_FryingPan",
+      "games": 2,
+      "usageRate": 0.1,
+      "avgWithItem": 8.0,
+      "delta": 3.329
+    }
+  ]
+}

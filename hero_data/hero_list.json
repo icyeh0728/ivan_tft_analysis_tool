@@ -1,0 +1,506 @@
+[
+  {
+    "name": "Twitch",
+    "avgPlacement": 4.47,
+    "totalGames": 4440,
+    "winRate": 10.5,
+    "top4Rate": 50.6,
+    "delta": -0.03
+  },
+  {
+    "name": "Silco",
+    "avgPlacement": 4.58,
+    "totalGames": 3522,
+    "winRate": 13.8,
+    "top4Rate": 48.4,
+    "delta": 0.08
+  },
+  {
+    "name": "Cassiopeia",
+    "avgPlacement": 4.62,
+    "totalGames": 3970,
+    "winRate": 10.2,
+    "top4Rate": 47.7,
+    "delta": 0.12
+  },
+  {
+    "name": "Vladimir",
+    "avgPlacement": 4.55,
+    "totalGames": 10172,
+    "winRate": 11.2,
+    "top4Rate": 49.4,
+    "delta": 0.05
+  },
+  {
+    "name": "Zoe",
+    "avgPlacement": 4.42,
+    "totalGames": 6234,
+    "winRate": 13.3,
+    "top4Rate": 51.0,
+    "delta": -0.08
+  },
+  {
+    "name": "RenataGlasc",
+    "avgPlacement": 4.72,
+    "totalGames": 3041,
+    "winRate": 14.2,
+    "top4Rate": 46.8,
+    "delta": 0.22
+  },
+  {
+    "name": "Jinx",
+    "avgPlacement": 3.81,
+    "totalGames": 1419,
+    "winRate": 20.9,
+    "top4Rate": 61.9,
+    "delta": -0.69
+  },
+  {
+    "name": "Darius",
+    "avgPlacement": 4.61,
+    "totalGames": 3730,
+    "winRate": 12.7,
+    "top4Rate": 48.1,
+    "delta": 0.11
+  },
+  {
+    "name": "Lieutenant",
+    "avgPlacement": 3.75,
+    "totalGames": 4183,
+    "winRate": 22.0,
+    "top4Rate": 63.8,
+    "delta": -0.75
+  },
+  {
+    "name": "Ezreal",
+    "avgPlacement": 4.44,
+    "totalGames": 5852,
+    "winRate": 12.3,
+    "top4Rate": 51.0,
+    "delta": -0.06
+  },
+  {
+    "name": "Vex",
+    "avgPlacement": 4.76,
+    "totalGames": 2508,
+    "winRate": 12.8,
+    "top4Rate": 44.7,
+    "delta": 0.26
+  },
+  {
+    "name": "DrMundo",
+    "avgPlacement": 4.55,
+    "totalGames": 5670,
+    "winRate": 11.1,
+    "top4Rate": 48.7,
+    "delta": 0.05
+  },
+  {
+    "name": "Corki",
+    "avgPlacement": 4.42,
+    "totalGames": 6506,
+    "winRate": 12.6,
+    "top4Rate": 51.2,
+    "delta": -0.08
+  },
+  {
+    "name": "Zyra",
+    "avgPlacement": 4.65,
+    "totalGames": 3080,
+    "winRate": 10.0,
+    "top4Rate": 47.1,
+    "delta": 0.15
+  },
+  {
+    "name": "Draven",
+    "avgPlacement": 4.43,
+    "totalGames": 3817,
+    "winRate": 14.7,
+    "top4Rate": 51.0,
+    "delta": -0.07
+  },
+  {
+    "name": "FlyGuy",
+    "avgPlacement": 4.48,
+    "totalGames": 4074,
+    "winRate": 12.0,
+    "top4Rate": 51.2,
+    "delta": -0.02
+  },
+  {
+    "name": "Lux",
+    "avgPlacement": 4.84,
+    "totalGames": 2127,
+    "winRate": 7.5,
+    "top4Rate": 44.1,
+    "delta": 0.34
+  },
+  {
+    "name": "Viktor",
+    "avgPlacement": 3.13,
+    "totalGames": 4451,
+    "winRate": 25.1,
+    "top4Rate": 76.6,
+    "delta": -1.37
+  },
+  {
+    "name": "Illaoi",
+    "avgPlacement": 4.35,
+    "totalGames": 10938,
+    "winRate": 12.4,
+    "top4Rate": 52.8,
+    "delta": -0.15
+  },
+  {
+    "name": "Morgana",
+    "avgPlacement": 4.79,
+    "totalGames": 3772,
+    "winRate": 9.6,
+    "top4Rate": 44.6,
+    "delta": 0.29
+  },
+  {
+    "name": "Gangplank",
+    "avgPlacement": 4.41,
+    "totalGames": 9257,
+    "winRate": 14.1,
+    "top4Rate": 51.3,
+    "delta": -0.09
+  },
+  {
+    "name": "Ekko",
+    "avgPlacement": 4.3,
+    "totalGames": 7670,
+    "winRate": 15.3,
+    "top4Rate": 53.4,
+    "delta": -0.2
+  },
+  {
+    "name": "Nami",
+    "avgPlacement": 4.43,
+    "totalGames": 7164,
+    "winRate": 12.5,
+    "top4Rate": 51.4,
+    "delta": -0.07
+  },
+  {
+    "name": "Jayce",
+    "avgPlacement": 3.96,
+    "totalGames": 7873,
+    "winRate": 15.8,
+    "top4Rate": 60.5,
+    "delta": -0.54
+  },
+  {
+    "name": "Malzahar",
+    "avgPlacement": 3.99,
+    "totalGames": 3638,
+    "winRate": 15.8,
+    "top4Rate": 60.2,
+    "delta": -0.51
+  },
+  {
+    "name": "Ambessa",
+    "avgPlacement": 4.35,
+    "totalGames": 11596,
+    "winRate": 14.5,
+    "top4Rate": 52.3,
+    "delta": -0.15
+  },
+  {
+    "name": "TwistedFate",
+    "avgPlacement": 4.48,
+    "totalGames": 5861,
+    "winRate": 12.0,
+    "top4Rate": 50.1,
+    "delta": -0.02
+  },
+  {
+    "name": "LeBlanc",
+    "avgPlacement": 4.03,
+    "totalGames": 7668,
+    "winRate": 15.8,
+    "top4Rate": 58.9,
+    "delta": -0.47
+  },
+  {
+    "name": "Zeri",
+    "avgPlacement": 4.63,
+    "totalGames": 2963,
+    "winRate": 9.2,
+    "top4Rate": 47.6,
+    "delta": 0.13
+  },
+  {
+    "name": "Akali",
+    "avgPlacement": 4.46,
+    "totalGames": 4572,
+    "winRate": 13.3,
+    "top4Rate": 50.5,
+    "delta": -0.04
+  },
+  {
+    "name": "Rumble",
+    "avgPlacement": 3.92,
+    "totalGames": 8773,
+    "winRate": 18.5,
+    "top4Rate": 60.5,
+    "delta": -0.58
+  },
+  {
+    "name": "Warwick",
+    "avgPlacement": 3.1,
+    "totalGames": 4713,
+    "winRate": 24.7,
+    "top4Rate": 76.6,
+    "delta": -1.4
+  },
+  {
+    "name": "Rell",
+    "avgPlacement": 4.57,
+    "totalGames": 10461,
+    "winRate": 12.1,
+    "top4Rate": 48.7,
+    "delta": 0.07
+  },
+  {
+    "name": "Vi",
+    "avgPlacement": 4.03,
+    "totalGames": 12592,
+    "winRate": 16.5,
+    "top4Rate": 58.9,
+    "delta": -0.47
+  },
+  {
+    "name": "NunuWillump",
+    "avgPlacement": 4.56,
+    "totalGames": 7115,
+    "winRate": 11.0,
+    "top4Rate": 48.7,
+    "delta": 0.06
+  },
+  {
+    "name": "Leona",
+    "avgPlacement": 4.62,
+    "totalGames": 4695,
+    "winRate": 9.2,
+    "top4Rate": 48.1,
+    "delta": 0.12
+  },
+  {
+    "name": "Gremlin",
+    "avgPlacement": 4.47,
+    "totalGames": 2980,
+    "winRate": 17.3,
+    "top4Rate": 50.8,
+    "delta": -0.03
+  },
+  {
+    "name": "Red",
+    "avgPlacement": 4.44,
+    "totalGames": 3437,
+    "winRate": 13.3,
+    "top4Rate": 51.5,
+    "delta": -0.06
+  },
+  {
+    "name": "Fish",
+    "avgPlacement": 4.51,
+    "totalGames": 3390,
+    "winRate": 11.8,
+    "top4Rate": 49.5,
+    "delta": 0.01
+  },
+  {
+    "name": "Caitlyn",
+    "avgPlacement": 4.01,
+    "totalGames": 5689,
+    "winRate": 14.6,
+    "top4Rate": 59.4,
+    "delta": -0.49
+  },
+  {
+    "name": "Amumu",
+    "avgPlacement": 4.55,
+    "totalGames": 2522,
+    "winRate": 10.9,
+    "top4Rate": 50.0,
+    "delta": 0.05
+  },
+  {
+    "name": "Irelia",
+    "avgPlacement": 4.45,
+    "totalGames": 8594,
+    "winRate": 12.0,
+    "top4Rate": 50.8,
+    "delta": -0.05
+  },
+  {
+    "name": "Shooter",
+    "avgPlacement": 4.55,
+    "totalGames": 4472,
+    "winRate": 11.5,
+    "top4Rate": 48.5,
+    "delta": 0.05
+  },
+  {
+    "name": "Blitzcrank",
+    "avgPlacement": 4.7,
+    "totalGames": 3235,
+    "winRate": 9.4,
+    "top4Rate": 46.4,
+    "delta": 0.2
+  },
+  {
+    "name": "Beardy",
+    "avgPlacement": 4.47,
+    "totalGames": 8546,
+    "winRate": 12.3,
+    "top4Rate": 50.5,
+    "delta": -0.03
+  },
+  {
+    "name": "MissMage",
+    "avgPlacement": 3.08,
+    "totalGames": 3806,
+    "winRate": 26.9,
+    "top4Rate": 76.8,
+    "delta": -1.42
+  },
+  {
+    "name": "Urgot",
+    "avgPlacement": 4.43,
+    "totalGames": 4886,
+    "winRate": 11.9,
+    "top4Rate": 51.5,
+    "delta": -0.07
+  },
+  {
+    "name": "Garen",
+    "avgPlacement": 4.49,
+    "totalGames": 10110,
+    "winRate": 11.6,
+    "top4Rate": 50.6,
+    "delta": -0.01
+  },
+  {
+    "name": "Singed",
+    "avgPlacement": 4.67,
+    "totalGames": 4633,
+    "winRate": 14.6,
+    "top4Rate": 47.7,
+    "delta": 0.17
+  },
+  {
+    "name": "Trundle",
+    "avgPlacement": 4.67,
+    "totalGames": 2947,
+    "winRate": 11.8,
+    "top4Rate": 46.6,
+    "delta": 0.17
+  },
+  {
+    "name": "Mordekaiser",
+    "avgPlacement": 4.0,
+    "totalGames": 4820,
+    "winRate": 19.0,
+    "top4Rate": 58.8,
+    "delta": -0.5
+  },
+  {
+    "name": "Blue",
+    "avgPlacement": 4.48,
+    "totalGames": 7714,
+    "winRate": 13.4,
+    "top4Rate": 50.6,
+    "delta": -0.02
+  },
+  {
+    "name": "Tristana",
+    "avgPlacement": 4.51,
+    "totalGames": 7148,
+    "winRate": 12.0,
+    "top4Rate": 49.8,
+    "delta": 0.01
+  },
+  {
+    "name": "KogMaw",
+    "avgPlacement": 4.64,
+    "totalGames": 2273,
+    "winRate": 9.3,
+    "top4Rate": 48.4,
+    "delta": 0.14
+  },
+  {
+    "name": "Sett",
+    "avgPlacement": 4.41,
+    "totalGames": 4017,
+    "winRate": 13.9,
+    "top4Rate": 51.2,
+    "delta": -0.09
+  },
+  {
+    "name": "Chainsaw",
+    "avgPlacement": 4.56,
+    "totalGames": 3719,
+    "winRate": 17.3,
+    "top4Rate": 48.8,
+    "delta": 0.06
+  },
+  {
+    "name": "Sion",
+    "avgPlacement": 4.26,
+    "totalGames": 7038,
+    "winRate": 13.0,
+    "top4Rate": 54.4,
+    "delta": -0.24
+  },
+  {
+    "name": "Elise",
+    "avgPlacement": 4.32,
+    "totalGames": 5889,
+    "winRate": 13.8,
+    "top4Rate": 52.9,
+    "delta": -0.18
+  },
+  {
+    "name": "Prime",
+    "avgPlacement": 4.51,
+    "totalGames": 5045,
+    "winRate": 11.7,
+    "top4Rate": 50.7,
+    "delta": 0.01
+  },
+  {
+    "name": "Nocturne",
+    "avgPlacement": 4.53,
+    "totalGames": 2789,
+    "winRate": 11.2,
+    "top4Rate": 49.8,
+    "delta": 0.03
+  },
+  {
+    "name": "Heimerdinger",
+    "avgPlacement": 4.52,
+    "totalGames": 5357,
+    "winRate": 10.2,
+    "top4Rate": 50.0,
+    "delta": 0.02
+  },
+  {
+    "name": "Ziggs",
+    "avgPlacement": 5.05,
+    "totalGames": 1854,
+    "winRate": 9.3,
+    "top4Rate": 39.3,
+    "delta": 0.55
+  },
+  {
+    "name": "Camille",
+    "avgPlacement": 4.55,
+    "totalGames": 3867,
+    "winRate": 13.2,
+    "top4Rate": 49.0,
+    "delta": 0.05
+  }
+]

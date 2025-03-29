@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "name": "Sion",
+    "avgPlacement": 4.26,
+    "totalGames": 7038,
+    "winRate": 13.0,
+    "top4Rate": 54.4,
+    "delta": -0.24
+  },
+  "items": [
+    {
+      "item": "NoItems",
+      "games": 7038,
+      "usageRate": 100.0,
+      "avgWithItem": 4.264,
+      "delta": 0.0
+    }
+  ]
+}
