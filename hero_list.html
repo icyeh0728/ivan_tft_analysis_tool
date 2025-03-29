@@ -152,54 +152,53 @@
                 
                 // 確保英雄名稱存在且為字符串
                 const heroName = hero.name ? String(hero.name) : '';
-                const heroNameLower = heroName.toLowerCase();
                 
-                card.onclick = () => window.location.href = `hero_items.html?hero=TFT13_${heroName}`;
-                
-                // 構建圖片URL時進行安全檢查
-                const imgSrc = heroNameLower ? 
-                    `tft13_character_images/tft13_${heroNameLower}_square.tft_set13.jpg` :
+                // 修改圖片路徑處理
+                const imgSrc = heroName ? 
+                    `./tft13_character_images/tft13_${heroName.toLowerCase()}_square.tft_set13.jpg` :
                     '';
                     
                 const fallbackSvg = `data:image/svg+xml,${encodeURIComponent(
-                    `<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'>
-                        <rect width='100' height='100' fill='#4A90E2'/>
-                        <text x='50' y='50' font-size='20' fill='white' text-anchor='middle' dominant-baseline='middle'>
+                    `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+                        <rect width="100" height="100" fill="#4A90E2"/>
+                        <text x="50" y="50" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">
                             ${heroName.slice(0, 2).toUpperCase()}
                         </text>
                     </svg>`
                 )}`;
+
+                card.onclick = () => window.location.href = `hero_items.html?hero=TFT13_${heroName}`;
 
                 card.innerHTML = `
                     <div class="hero-header">
                         <img src="${imgSrc}" 
                              alt="${heroName}" 
                              class="hero-image"
-                             onerror="this.src='${fallbackSvg}'">
+                             onerror="this.onerror=null; this.src='${fallbackSvg}';">
                         <h3 class="hero-name">${heroName}</h3>
                     </div>
                     <div class="hero-stats">
                         <div>
                             <span class="stat-label">平均名次:</span>
-                            <span>${(hero.avgPlacement || 0).toFixed(2)}</span>
+                            <span>${(Number(hero.avgPlacement) || 0).toFixed(2)}</span>
                         </div>
                         <div>
                             <span class="stat-label">Delta:</span>
-                            <span class="${(hero.delta || 0) < 0 ? 'positive-delta' : 'negative-delta'}">
-                                ${(hero.delta || 0).toFixed(2)}
+                            <span class="${(Number(hero.delta) || 0) < 0 ? 'positive-delta' : 'negative-delta'}">
+                                ${(Number(hero.delta) || 0).toFixed(2)}
                             </span>
                         </div>
                         <div>
                             <span class="stat-label">使用次數:</span>
-                            <span>${hero.totalGames || 0}</span>
+                            <span>${Number(hero.totalGames) || 0}</span>
                         </div>
                         <div>
                             <span class="stat-label">勝率:</span>
-                            <span>${hero.winRate || 0}%</span>
+                            <span>${Number(hero.winRate) || 0}%</span>
                         </div>
                         <div>
                             <span class="stat-label">前四率:</span>
-                            <span>${hero.top4Rate || 0}%</span>
+                            <span>${Number(hero.top4Rate) || 0}%</span>
                         </div>
                     </div>
                 `;
@@ -208,35 +207,59 @@
         }
 
         function sortHeroes(key) {
-            const buttons = document.querySelectorAll('.sort-button');
-            buttons.forEach(button => {
-                button.classList.remove('active');
-                if (button.dataset.sort === key) {
-                    button.classList.add('active');
+            try {
+                console.log('開始排序，key:', key);
+                if (!Array.isArray(heroes)) {
+                    console.error('heroes不是數組');
+                    return;
                 }
-            });
 
-            if (currentSort.key === key) {
-                currentSort.ascending = !currentSort.ascending;
-            } else {
-                currentSort.key = key;
-                currentSort.ascending = true;
+                const buttons = document.querySelectorAll('.sort-button');
+                buttons.forEach(button => {
+                    button.classList.remove('active');
+                    if (button.dataset.sort === key) {
+                        button.classList.add('active');
+                    }
+                });
+
+                if (currentSort.key === key) {
+                    currentSort.ascending = !currentSort.ascending;
+                } else {
+                    currentSort.key = key;
+                    currentSort.ascending = true;
+                }
+
+                console.log('排序方向:', currentSort.ascending ? '升序' : '降序');
+
+                const sortedHeroes = [...heroes].sort((a, b) => {
+                    if (!a || !b) return 0;
+                    
+                    let aValue = a[key];
+                    let bValue = b[key];
+
+                    // 確保數值有效
+                    if (key !== 'name') {
+                        aValue = Number(aValue) || 0;
+                        bValue = Number(bValue) || 0;
+                    } else {
+                        aValue = String(aValue || '');
+                        bValue = String(bValue || '');
+                    }
+                    
+                    if (key === 'name') {
+                        return currentSort.ascending ? 
+                            aValue.localeCompare(bValue) : 
+                            bValue.localeCompare(aValue);
+                    }
+                    
+                    return currentSort.ascending ? aValue - bValue : bValue - aValue;
+                });
+
+                console.log('排序後的結果:', sortedHeroes);
+                renderHeroGrid(sortedHeroes);
+            } catch (error) {
+                console.error('排序時出錯:', error);
             }
-
-            const sortedHeroes = [...heroes].sort((a, b) => {
-                let aValue = a[key];
-                let bValue = b[key];
-                
-                if (key === 'name') {
-                    return currentSort.ascending ? 
-                        aValue.localeCompare(bValue) : 
-                        bValue.localeCompare(aValue);
-                }
-                
-                return currentSort.ascending ? aValue - bValue : bValue - aValue;
-            });
-
-            renderHeroGrid(sortedHeroes);
         }
 
         function filterHeroes(query) {
