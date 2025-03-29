@@ -176,6 +176,8 @@
 
     <script>
         let originalItems = null;  // 保存原始數據順序
+        let currentSortColumn = null;
+        let isAscending = false;
 
         function sortItems(items, column) {
             return [...items].sort((a, b) => {
@@ -183,22 +185,22 @@
                     // 處理裝備名稱以進行比較
                     const aName = a.item.replace('TFT_Item_', '').replace('TFT13_Item_', '').replace('tft_item_', '').toLowerCase();
                     const bName = b.item.replace('TFT_Item_', '').replace('TFT13_Item_', '').replace('tft_item_', '').toLowerCase();
-                    return aName.localeCompare(bName);
+                    return isAscending ? aName.localeCompare(bName) : bName.localeCompare(aName);
                 }
                 
                 // 確保數值比較的正確性
                 const aValue = Number(a[column]) || 0;
                 const bValue = Number(b[column]) || 0;
-                return bValue - aValue;  // 默認降序排序
+                return isAscending ? aValue - bValue : bValue - aValue;
             });
         }
 
         function updateSortIcons(column) {
             const headers = document.querySelectorAll('th');
             headers.forEach(header => {
-                header.classList.remove('sort-asc', 'sort-desc');
+                header.classList.remove('sort-asc', 'sort-desc', 'sort-icon');
                 if (header.dataset.sort === column) {
-                    header.classList.add('sort-desc');
+                    header.classList.add(isAscending ? 'sort-asc' : 'sort-desc');
                 } else {
                     header.classList.add('sort-icon');
                 }
@@ -318,6 +320,15 @@
                 document.querySelectorAll('th').forEach(header => {
                     header.addEventListener('click', () => {
                         const column = header.dataset.sort;
+                        
+                        // 如果點擊的是同一列，切換排序方向
+                        if (currentSortColumn === column) {
+                            isAscending = !isAscending;
+                        } else {
+                            currentSortColumn = column;
+                            isAscending = false;  // 新列默認降序
+                        }
+                        
                         const sortedItems = sortItems(originalItems, column);
                         renderTable(sortedItems);
                         updateSortIcons(column);
